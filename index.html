@@ -22,6 +22,19 @@
       </nav>
     </header>
 
+    <aside class="music-dock" data-music-dock aria-label="Reproductor de música">
+      <div class="music-dock__panel" id="music-dock-panel" data-music-panel hidden>
+        <p class="music-dock__eyebrow">La canción de esta invitación</p>
+        <p class="music-dock__title">Volví a Nacer</p>
+        <p class="music-dock__artist">Carlos Vives</p>
+        <audio data-wedding-music src="audio/volvi-a-nacer.mp3" controls autoplay loop preload="none"></audio>
+        <p class="music-dock__status" data-music-status role="status" aria-live="polite">Intentando iniciar la música…</p>
+      </div>
+      <button class="music-dock__toggle" type="button" data-music-toggle aria-expanded="false" aria-controls="music-dock-panel" aria-label="Mostrar el reproductor de música">
+        <span aria-hidden="true">♫</span>
+      </button>
+    </aside>
+
     <main id="contenido">
       <section class="hero" id="inicio" aria-labelledby="hero-title">
         <div class="hero__collage" aria-hidden="true">
@@ -49,28 +62,6 @@
         <p class="eyebrow">Una invitación con mucho cariño</p>
         <h2 id="welcome-title">El amor se disfruta<br />más <em>en compañía.</em></h2>
         <p>Estamos preparando un día para celebrar, brindar y guardar en la memoria. Nos encantaría que seas parte.</p>
-        <details class="music-invitation">
-          <summary>
-            <span class="music-invitation__note" aria-hidden="true">♫</span>
-            <span class="music-invitation__copy">
-              <span class="music-invitation__eyebrow">Nuestra canción</span>
-              <span class="music-invitation__title">Volví a Nacer · Carlos Vives</span>
-            </span>
-            <span class="music-invitation__toggle" aria-hidden="true">+</span>
-          </summary>
-          <div class="music-invitation__player">
-            <iframe
-              title="Spotify: Volví a Nacer, de Carlos Vives"
-              src="https://open.spotify.com/embed/track/7AfvPT04bt4uU08RqgYWvs?utm_source=generator&amp;theme=1"
-              width="100%"
-              height="152"
-              frameborder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            ></iframe>
-            <a href="https://open.spotify.com/track/7AfvPT04bt4uU08RqgYWvs" target="_blank" rel="noopener noreferrer">Abrir en Spotify <span aria-hidden="true">↗</span></a>
-          </div>
-        </details>
         <span class="hand-note">¿Vienes? <span aria-hidden="true">☺</span></span>
       </section>
 

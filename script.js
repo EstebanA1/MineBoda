@@ -305,6 +305,87 @@ const deadlineString = `${deadlineParts.day} de ${deadlineParts.month} de ${dead
 setDateText("[data-deadline-text]", deadlineString);
 setDateText("[data-deadline-inline]", `${deadlineParts.day} de ${deadlineParts.month}`);
 
+const musicDock = document.querySelector("[data-music-dock]");
+const musicToggle = musicDock?.querySelector("[data-music-toggle]");
+const musicPanel = musicDock?.querySelector("[data-music-panel]");
+const weddingMusic = musicDock?.querySelector("[data-wedding-music]");
+const musicStatus = musicDock?.querySelector("[data-music-status]");
+let musicGestureListenersInstalled = false;
+
+function setMusicStatus(message) {
+  if (musicStatus) musicStatus.textContent = message;
+}
+
+function updateMusicDock() {
+  if (!musicDock || !weddingMusic) return;
+  musicDock.classList.toggle("is-playing", !weddingMusic.paused);
+  musicToggle?.setAttribute("aria-label", musicPanel?.hidden
+    ? "Mostrar el reproductor de música"
+    : "Ocultar el reproductor de música");
+}
+
+function retryMusicAfterGesture() {
+  musicGestureListenersInstalled = false;
+  document.removeEventListener("pointerdown", retryMusicAfterGesture, true);
+  document.removeEventListener("keydown", retryMusicAfterGesture, true);
+  if (weddingMusic?.paused && !weddingMusic.error) void attemptMusicPlayback();
+}
+
+function waitForMusicGesture() {
+  if (musicGestureListenersInstalled) return;
+  musicGestureListenersInstalled = true;
+  document.addEventListener("pointerdown", retryMusicAfterGesture, true);
+  document.addEventListener("keydown", retryMusicAfterGesture, true);
+}
+
+async function attemptMusicPlayback() {
+  if (!weddingMusic) return false;
+  try {
+    await weddingMusic.play();
+    musicDock?.classList.remove("needs-gesture", "needs-file");
+    setMusicStatus("Reproduciendo Volví a Nacer.");
+    return true;
+  } catch (error) {
+    if (weddingMusic.error || error?.name === "NotSupportedError") {
+      musicDock?.classList.add("needs-file");
+      setMusicStatus("Añade la canción como audio/volvi-a-nacer.mp3 para reproducirla.");
+    } else if (error?.name === "NotAllowedError") {
+      musicDock?.classList.add("needs-gesture");
+      setMusicStatus("El navegador bloqueó el inicio automático. Toca la página o el botón ♫ para iniciar la canción.");
+      waitForMusicGesture();
+    } else {
+      setMusicStatus("No se pudo iniciar la música. Abre los controles para intentarlo otra vez.");
+    }
+    return false;
+  }
+}
+
+if (musicDock && musicToggle && musicPanel && weddingMusic) {
+  musicToggle.addEventListener("click", () => {
+    musicPanel.hidden = !musicPanel.hidden;
+    musicToggle.setAttribute("aria-expanded", String(!musicPanel.hidden));
+    updateMusicDock();
+    if (!musicPanel.hidden && weddingMusic.paused && !weddingMusic.error) {
+      void attemptMusicPlayback();
+    }
+  });
+  weddingMusic.addEventListener("play", () => {
+    musicDock.classList.remove("needs-gesture", "needs-file");
+    setMusicStatus("Reproduciendo Volví a Nacer.");
+    updateMusicDock();
+  });
+  weddingMusic.addEventListener("pause", () => {
+    if (weddingMusic.currentTime > 0) setMusicStatus("Canción en pausa.");
+    updateMusicDock();
+  });
+  weddingMusic.addEventListener("error", () => {
+    musicDock.classList.add("needs-file");
+    setMusicStatus("No está el archivo audio/volvi-a-nacer.mp3. Coloca ahí una copia de audio que tengas permiso para usar.");
+  });
+  updateMusicDock();
+  void attemptMusicPlayback();
+}
+
 // Make the photo transitions calm and readable for visitors who prefer reduced motion.
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   document.documentElement.classList.add("reduce-motion");
