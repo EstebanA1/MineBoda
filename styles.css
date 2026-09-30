@@ -74,7 +74,7 @@ a { color: inherit; }
 .mosaic-tile--i { grid-area: i; }
 .mosaic-tile--j { grid-area: j; }
 .hero__shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, #302b2748 0%, #302b2712 28%, #302b2712 72%, #302b2755 100%); pointer-events: none; }
-.hero__topline { position: absolute; top: 3.45rem; right: 1.15rem; left: 1.15rem; display: flex; justify-content: space-between; gap: 1rem; color: var(--white); text-shadow: 0 1px 12px #0005; font: 0.52rem var(--mono); letter-spacing: 0.1em; }
+.hero__topline { position: absolute; top: 3.45rem; right: 1.15rem; left: 1.15rem; display: flex; justify-content: space-between; gap: 1rem; color: var(--white); text-shadow: 0 1px 12px #0005; font: 0.52rem var(--mono); letter-spacing: 0.025em; }
 .hero__content { position: absolute; top: 50%; left: 50%; width: max-content; max-width: calc(100vw - 1.5rem); padding: 0; transform: translate(-50%, -50%); border: 0; background: transparent; box-shadow: none; color: var(--ink); text-align: center; backdrop-filter: none; }
 .eyebrow { margin: 0 0 1.1rem; color: var(--taupe); font: 500 0.62rem/1.4 var(--mono); letter-spacing: 0.11em; text-transform: uppercase; }
 .hero__eyebrow { color: var(--taupe); display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.53rem; }
@@ -223,7 +223,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .rsvp__scribble { position: absolute; right: 0.7rem; top: 25%; color: var(--beige); font: italic 1.05rem var(--serif); transform: rotate(-12deg); }
 
 .footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 1.1rem 1.4rem 1.35rem; background: var(--ink); color: var(--paper); }
-.footer .wordmark { font-size: 1rem; }
+.footer .wordmark { flex: 0 0 auto; font-size: 1rem; white-space: nowrap; }
 .footer p { margin: 0; color: #e1ddd7; text-align: center; font-size: 0.58rem; }
 .footer__top { color: var(--beige); white-space: nowrap; font: 0.53rem var(--mono); text-decoration: none; }
 
