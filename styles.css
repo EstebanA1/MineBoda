@@ -127,7 +127,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .doodle--sun { color: #a58b74; }
 .text-link { display: inline-flex; gap: 0.45rem; margin-top: 1rem; color: var(--ink); font-size: 0.77rem; font-weight: 700; text-decoration-color: var(--taupe); text-underline-offset: 0.25rem; }
 
-.event { display: grid; gap: 2.5rem; background: var(--stone-light); }
+.event { position: relative; z-index: 1; display: grid; gap: 2.5rem; background: var(--stone-light); }
 .event__copy { display: flex; flex-direction: column; align-items: flex-start; }
 .event__copy .eyebrow { margin-bottom: 1.1rem; }
 .eyebrow-star { font-size: 1rem; padding-right: 0.3rem; }
