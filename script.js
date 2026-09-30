@@ -307,9 +307,9 @@ setDateText("[data-deadline-inline]", `${deadlineParts.day} de ${deadlineParts.m
 
 const musicDock = document.querySelector("[data-music-dock]");
 const musicToggle = musicDock?.querySelector("[data-music-toggle]");
-const musicPanel = musicDock?.querySelector("[data-music-panel]");
 const weddingMusic = musicDock?.querySelector("[data-wedding-music]");
 const musicStatus = musicDock?.querySelector("[data-music-status]");
+const musicIcon = musicDock?.querySelector("[data-music-icon]");
 let musicGestureListenersInstalled = false;
 
 function setMusicStatus(message) {
@@ -318,16 +318,22 @@ function setMusicStatus(message) {
 
 function updateMusicDock() {
   if (!musicDock || !weddingMusic) return;
-  musicDock.classList.toggle("is-playing", !weddingMusic.paused);
-  musicToggle?.setAttribute("aria-label", musicPanel?.hidden
-    ? "Mostrar el reproductor de música"
-    : "Ocultar el reproductor de música");
+  const isPlaying = !weddingMusic.paused && !weddingMusic.ended;
+  musicDock.classList.toggle("is-playing", isPlaying);
+  musicToggle?.setAttribute("aria-pressed", String(isPlaying));
+  musicToggle?.setAttribute("aria-label", `${isPlaying ? "Pausar" : "Reanudar"} Volví a Nacer`);
+  if (musicIcon) musicIcon.textContent = isPlaying ? "Ⅱ" : "♫";
 }
 
-function retryMusicAfterGesture() {
+function removeMusicGestureListeners() {
   musicGestureListenersInstalled = false;
   document.removeEventListener("pointerdown", retryMusicAfterGesture, true);
   document.removeEventListener("keydown", retryMusicAfterGesture, true);
+}
+
+function retryMusicAfterGesture(event) {
+  if (event.target instanceof Element && event.target.closest("[data-music-toggle]")) return;
+  removeMusicGestureListeners();
   if (weddingMusic?.paused && !weddingMusic.error) void attemptMusicPlayback();
 }
 
@@ -344,6 +350,7 @@ async function attemptMusicPlayback() {
     await weddingMusic.play();
     musicDock?.classList.remove("needs-gesture", "needs-file");
     setMusicStatus("Reproduciendo Volví a Nacer.");
+    updateMusicDock();
     return true;
   } catch (error) {
     if (weddingMusic.error || error?.name === "NotSupportedError") {
@@ -360,17 +367,17 @@ async function attemptMusicPlayback() {
   }
 }
 
-if (musicDock && musicToggle && musicPanel && weddingMusic) {
+if (musicDock && musicToggle && weddingMusic) {
   musicToggle.addEventListener("click", () => {
-    musicPanel.hidden = !musicPanel.hidden;
-    musicToggle.setAttribute("aria-expanded", String(!musicPanel.hidden));
-    updateMusicDock();
-    if (!musicPanel.hidden && weddingMusic.paused && !weddingMusic.error) {
+    if (weddingMusic.paused) {
       void attemptMusicPlayback();
+    } else {
+      weddingMusic.pause();
     }
   });
   weddingMusic.addEventListener("play", () => {
     musicDock.classList.remove("needs-gesture", "needs-file");
+    removeMusicGestureListeners();
     setMusicStatus("Reproduciendo Volví a Nacer.");
     updateMusicDock();
   });
@@ -383,7 +390,10 @@ if (musicDock && musicToggle && musicPanel && weddingMusic) {
     setMusicStatus("No está el archivo audio/volvi-a-nacer.mp3. Coloca ahí una copia de audio que tengas permiso para usar.");
   });
   updateMusicDock();
-  void attemptMusicPlayback();
+  waitForMusicGesture();
+  window.setTimeout(() => {
+    if (weddingMusic.paused && !weddingMusic.error) void attemptMusicPlayback();
+  }, 500);
 }
 
 // Make the photo transitions calm and readable for visitors who prefer reduced motion.

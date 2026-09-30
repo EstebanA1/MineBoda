@@ -23,15 +23,10 @@
     </header>
 
     <aside class="music-dock" data-music-dock aria-label="Reproductor de música">
-      <div class="music-dock__panel" id="music-dock-panel" data-music-panel hidden>
-        <p class="music-dock__eyebrow">La canción de esta invitación</p>
-        <p class="music-dock__title">Volví a Nacer</p>
-        <p class="music-dock__artist">Carlos Vives</p>
-        <audio data-wedding-music src="audio/volvi-a-nacer.mp3" controls autoplay loop preload="none"></audio>
-        <p class="music-dock__status" data-music-status role="status" aria-live="polite">Intentando iniciar la música…</p>
-      </div>
-      <button class="music-dock__toggle" type="button" data-music-toggle aria-expanded="false" aria-controls="music-dock-panel" aria-label="Mostrar el reproductor de música">
-        <span aria-hidden="true">♫</span>
+      <audio data-wedding-music src="audio/volvi-a-nacer.mp3" loop preload="none"></audio>
+      <p class="music-dock__status" data-music-status role="status" aria-live="polite"></p>
+      <button class="music-dock__toggle" type="button" data-music-toggle aria-pressed="false" aria-label="Reanudar Volví a Nacer">
+        <span data-music-icon aria-hidden="true">♫</span>
       </button>
     </aside>
 

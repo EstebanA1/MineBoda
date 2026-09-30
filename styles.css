@@ -107,14 +107,10 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .music-dock__toggle { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border: 1px solid #d8d0c7; border-radius: 50%; color: var(--ink); background: #f5f2edf2; box-shadow: 0 0.45rem 1.25rem #302b2733; backdrop-filter: blur(10px); cursor: pointer; font-size: 1.25rem; transition: color 180ms ease, background-color 180ms ease, transform 180ms ease; }
 .music-dock__toggle:hover { background: var(--white); transform: scale(1.04); }
 .music-dock__toggle:focus-visible { outline: 2px solid var(--taupe); outline-offset: 3px; }
-.music-dock__panel { position: absolute; top: 50%; right: calc(100% + 0.65rem); width: min(18rem, calc(100vw - 5rem)); padding: 1rem; transform: translateY(-50%); border: 1px solid var(--stone); border-radius: 1rem; color: var(--ink); background: #f5f2edf5; box-shadow: 0 0.6rem 1.8rem #302b2733; backdrop-filter: blur(14px); }
-.music-dock__eyebrow { margin: 0 0 0.4rem; color: var(--taupe); font: 0.5rem var(--mono); letter-spacing: 0.09em; text-transform: uppercase; }
-.music-dock__title { margin: 0; font: 500 1.05rem/1.2 var(--serif); }
-.music-dock__artist { margin: 0.15rem 0 0.8rem; color: var(--ink-soft); font-size: 0.76rem; }
-.music-dock__panel audio { display: block; width: 100%; height: 2.5rem; }
-.music-dock__status { margin: 0.55rem 0 0; color: var(--ink-soft); font: 0.57rem/1.45 var(--mono); }
-.music-dock.needs-gesture::after { position: absolute; top: 50%; right: calc(100% + 0.55rem); width: max-content; max-width: min(13rem, calc(100vw - 4rem)); padding: 0.5rem 0.7rem; transform: translateY(-50%); border: 1px solid var(--stone); border-radius: 99px; color: var(--ink); background: var(--paper); box-shadow: 0 0.4rem 1rem #302b2724; content: "Toca ♫ para iniciar"; font: 0.57rem var(--mono); }
-.music-dock.needs-file::after { position: absolute; top: 50%; right: calc(100% + 0.55rem); width: max-content; max-width: min(13rem, calc(100vw - 4rem)); padding: 0.5rem 0.7rem; transform: translateY(-50%); border: 1px solid var(--stone); border-radius: 99px; color: var(--ink); background: var(--paper); box-shadow: 0 0.4rem 1rem #302b2724; content: "Falta agregar la canción"; font: 0.57rem var(--mono); }
+.music-dock__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+.music-dock.needs-gesture::after, .music-dock.needs-file::after { position: absolute; top: 50%; right: calc(100% + 0.55rem); width: max-content; max-width: min(13rem, calc(100vw - 4rem)); padding: 0.5rem 0.7rem; transform: translateY(-50%); border: 1px solid var(--stone); border-radius: 99px; color: var(--ink); background: var(--paper); box-shadow: 0 0.4rem 1rem #302b2724; font: 0.57rem var(--mono); }
+.music-dock.needs-gesture::after { content: "Toca la pantalla para iniciar"; }
+.music-dock.needs-file::after { content: "No se pudo cargar la canción"; }
 .music-dock.is-playing .music-dock__toggle { color: var(--taupe); }
 .hand-note { align-self: flex-end; margin: 1.25rem 0 0; color: var(--taupe); font: italic 1.2rem var(--serif); transform: rotate(-7deg); }
 .hand-note span { color: var(--ink); }
