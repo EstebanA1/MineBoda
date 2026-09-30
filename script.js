@@ -186,7 +186,7 @@ setSinglePhoto("rsvp", invitation.photos.rsvp.src, invitation.photos.rsvp.alt);
 
 const galleryScroll = document.querySelector("[data-gallery-scroll]");
 const galleryMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-const galleryStepRatio = 0.42;
+const galleryStepRatio = 0.34;
 const galleryTransitionStart = 0.28;
 let galleryPhotos = [];
 let galleryStage = null;
