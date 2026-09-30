@@ -186,7 +186,7 @@ setSinglePhoto("rsvp", invitation.photos.rsvp.src, invitation.photos.rsvp.alt);
 
 const galleryScroll = document.querySelector("[data-gallery-scroll]");
 const galleryMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-const galleryStepRatio = 0.34;
+const galleryStepRatio = 0.42;
 const galleryTransitionStart = 0.28;
 let galleryPhotos = [];
 let galleryStage = null;
@@ -326,18 +326,8 @@ function renderGallery() {
   galleryPhotos.forEach((photo) => photoLayer.append(photo));
   galleryStage.append(photoLayer);
 
-  const steps = document.createElement("div");
-  steps.className = "gallery__steps";
-  steps.setAttribute("aria-hidden", "true");
-  for (let index = 0; index < galleryPhotos.length + 1; index += 1) {
-    const step = document.createElement("div");
-    step.className = "gallery__step";
-    step.style.height = `${galleryStepRatio * 100}svh`;
-    steps.append(step);
-  }
-
   galleryScroll.style.height = `${(galleryPhotos.length + 1) * galleryStepRatio * 100}svh`;
-  galleryScroll.replaceChildren(galleryStage, steps);
+  galleryScroll.replaceChildren(galleryStage);
   queueGalleryStoryUpdate();
 }
 
