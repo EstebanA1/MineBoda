@@ -9,7 +9,7 @@ const storyPhotoNumbers = new Set([4, 6, 8, 17, 21, 26]);
 const tallGalleryPhotoNumbers = new Set([7, 24, 32, 34, 45]);
 const galleryExcludedPhotoNumbers = new Set([...heroPhotoNumbers, ...storyPhotoNumbers, 9, 15, 20, 44, 52]);
 // Alterna retratos, paisajes y fotos destacadas para un mosaico tipo tetris.
-const galleryOrder = [29, 1, 46, 7, 13, 50, 22, 24, 30, 39, 32, 2, 45, 27, 53, 18, 56, 34, 41, 49, 25, 47, 54, 31, 16, 33, 48, 19, 35, 11, 28, 38, 40, 55, 42, 37];
+const galleryOrder = [29, 1, 46, 7, 13, 50, 22, 24, 30, 39, 32, 2, 45, 27, 53, 18, 56, 34, 41, 25, 47, 54, 31, 16, 33, 48, 19, 35, 11, 28, 38, 40, 55, 42, 37];
 // Medidas de los WebP para reservar la proporción de cada mosaico antes de la carga diferida.
 const galleryPhotoDimensions = {
   1: [1650, 2200], 2: [899, 1599], 7: [1200, 1600], 11: [1200, 1600],
@@ -44,7 +44,7 @@ const invitation = {
     dress: { src: photoPath(15), alt: "Esteban y Nicole en una ocasión formal" },
     rsvp: { src: photoPath(52), alt: "Esteban y Nicole en una selfie al aire libre" },
     gallery: galleryOrder
-      .filter((number) => !galleryExcludedPhotoNumbers.has(number) || number === 49)
+      .filter((number) => !galleryExcludedPhotoNumbers.has(number))
       .map((number) => ({
         number,
         width: galleryPhotoDimensions[number][0],
