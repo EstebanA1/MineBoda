@@ -4,7 +4,7 @@ Invitación web estática, pensada primero para teléfonos y lista para alojar e
 
 ## Fotografías
 
-Copia las imágenes originales en la carpeta `fotos/por-revisar/`. Las versiones optimizadas para la web están en `fotos/web/`; la 23 va en portada y las 3, 5, 10, 12, 14, 23, 36, 43, 49 y 51 forman el collage inicial. El recorrido usa las fotos 4, 6, 8, 17, 21 y 26. Las fotos 9, 15 y 52 aparecen en los detalles, vestimenta y RSVP, respectivamente. Se omiten la 20 (borrosa) y la 44. La galería mezcla los formatos según las dimensiones de cada WebP para formar un mosaico tipo tetris; las fotos 7, 24, 32, 34 y 45 ocupan doble altura, y la 40 y la 48 conservan el tamaño normal. La 46 muestra el encuadre completo y la 56 está girada en formato horizontal. El orden visual de las fotos está intercalado, y la carpeta con originales se excluye de Git para mantener ligero el repositorio.
+Copia las imágenes originales en la carpeta `fotos/por-revisar/`. Las versiones optimizadas para la web están en `fotos/web/`; las fotos 3, 5, 10, 12, 14, 36, 43, 49 y 51 forman el collage inicial. La 23 se integra en horizontal en la galería. El recorrido usa las fotos 4, 6, 8, 17, 21 y 26. Las fotos 9, 15 y 52 aparecen en los detalles, vestimenta y RSVP, respectivamente. Se omiten la 20 (borrosa) y la 44. La galería mezcla los formatos según las dimensiones de cada WebP para formar un mosaico tipo tetris; las fotos 7, 24, 32, 34 y 45 ocupan doble altura, y la 40 y la 48 conservan el tamaño normal. La 46 muestra el encuadre completo y la 56 está girada en formato horizontal. El orden visual de las fotos está intercalado, y la carpeta con originales se excluye de Git para mantener ligero el repositorio.
 
 ## Datos usados para esta primera maqueta
 

@@ -4,17 +4,17 @@
  * Las rutas de fotos apuntan a WebP optimizados; los originales se conservan en por-revisar.
  */
 const photoPath = (number) => `fotos/web/${String(number).padStart(2, "0")}.webp`;
-const heroPhotoNumbers = new Set([3, 5, 10, 12, 14, 23, 36, 43, 49, 51]);
+const heroPhotoNumbers = new Set([3, 5, 10, 12, 14, 36, 43, 49, 51]);
 const storyPhotoNumbers = new Set([4, 6, 8, 17, 21, 26]);
 const tallGalleryPhotoNumbers = new Set([7, 24, 32, 34, 45]);
 const galleryExcludedPhotoNumbers = new Set([...heroPhotoNumbers, ...storyPhotoNumbers, 9, 15, 20, 44, 52]);
 // Alterna retratos, paisajes y fotos destacadas para un mosaico tipo tetris.
-const galleryOrder = [29, 1, 46, 7, 13, 50, 22, 24, 30, 39, 32, 2, 45, 27, 53, 18, 56, 34, 41, 25, 47, 54, 31, 16, 33, 48, 19, 35, 11, 28, 38, 40, 55, 42, 37];
+const galleryOrder = [29, 1, 46, 7, 13, 50, 22, 23, 24, 30, 39, 32, 2, 45, 27, 53, 18, 56, 34, 41, 25, 47, 54, 31, 16, 33, 48, 19, 35, 11, 28, 38, 40, 55, 42, 37];
 // Medidas de los WebP para reservar la proporción de cada mosaico antes de la carga diferida.
 const galleryPhotoDimensions = {
   1: [1650, 2200], 2: [899, 1599], 7: [1200, 1600], 11: [1200, 1600],
   13: [1200, 1600], 16: [1650, 2200], 18: [1650, 2200], 19: [1650, 2200],
-  22: [2200, 1650], 24: [1017, 2200], 25: [1650, 2200], 27: [1650, 2200],
+  22: [2200, 1650], 23: [2200, 1238], 24: [1017, 2200], 25: [1650, 2200], 27: [1650, 2200],
   28: [1080, 1920], 29: [1080, 1920], 30: [1080, 1920], 31: [1080, 1920],
   32: [1080, 1920], 33: [1080, 1920], 34: [1239, 2200], 35: [1080, 1920],
   37: [1650, 2200], 38: [1647, 2200], 39: [2200, 1647], 40: [1647, 2200],
@@ -31,7 +31,6 @@ const invitation = {
   venue: "Espacio Los Aromos",
   place: "Espacio Los Aromos, Lagunillas, Coronel, Chile",
   photos: {
-    cover: { src: photoPath(23), alt: "Esteban y Nicole en la playa al atardecer" },
     story: [
       { src: photoPath(4), alt: "Esteban y Nicole compartiendo un momento especial" },
       { src: photoPath(6), alt: "Esteban y Nicole posando juntos durante una salida" },
@@ -181,8 +180,6 @@ if (siteHeader && heroSection) {
   }
 }
 
-const coverCollagePhoto = document.querySelector("[data-collage-cover]");
-if (coverCollagePhoto) coverCollagePhoto.src = invitation.photos.cover.src;
 document.querySelectorAll("[data-collage-number]").forEach((image) => {
   image.src = photoPath(Number(image.dataset.collageNumber));
 });
@@ -200,7 +197,7 @@ function renderGallery() {
     figure.dataset.scrollReveal = "";
     figure.dataset.photoNumber = String(photo.number);
     if (tallGalleryPhotoNumbers.has(photo.number)) figure.classList.add("gallery__item--tall");
-    if (photo.number === 46 || photo.number === 56) figure.classList.add("gallery__item--landscape");
+    if (photo.number === 23 || photo.number === 46 || photo.number === 56) figure.classList.add("gallery__item--landscape");
     if (photo.number === 46) figure.classList.add("gallery__item--uncropped");
     const image = document.createElement("img");
     image.alt = photo.alt || `Fotografía ${index + 1} de Esteban y Nicole`;
