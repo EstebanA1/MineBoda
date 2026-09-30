@@ -6,9 +6,8 @@
 const photoPath = (number) => `fotos/web/${String(number).padStart(2, "0")}.webp`;
 const heroPhotoNumbers = new Set([3, 5, 10, 12, 14, 36, 43, 49, 51]);
 const storyPhotoNumbers = new Set([4, 6, 8, 17, 21, 26]);
-const tallGalleryPhotoNumbers = new Set([7, 24, 32, 34, 45]);
 const galleryExcludedPhotoNumbers = new Set([...heroPhotoNumbers, ...storyPhotoNumbers, 9, 15, 20, 44, 52]);
-// Alterna retratos, paisajes y fotos destacadas para un mosaico tipo tetris.
+// Alterna retratos y paisajes para que las fotos entren una a una en la historia.
 const galleryOrder = [29, 1, 46, 7, 13, 50, 22, 23, 24, 30, 39, 32, 2, 45, 27, 53, 18, 56, 34, 41, 25, 47, 54, 31, 16, 33, 48, 19, 35, 11, 28, 38, 40, 55, 42, 37];
 // Medidas de los WebP para reservar la proporción de cada mosaico antes de la carga diferida.
 const galleryPhotoDimensions = {
@@ -185,84 +184,167 @@ setSinglePhoto("details", invitation.photos.details.src, invitation.photos.detai
 setSinglePhoto("dress", invitation.photos.dress.src, invitation.photos.dress.alt);
 setSinglePhoto("rsvp", invitation.photos.rsvp.src, invitation.photos.rsvp.alt);
 
+const galleryScroll = document.querySelector("[data-gallery-scroll]");
+const galleryMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+const galleryStepRatio = 0.42;
+const galleryTransitionStart = 0.28;
+let galleryPhotos = [];
+let galleryStage = null;
+let galleryUpdateFrame = 0;
+
+function clamp(value, minimum, maximum) {
+  return Math.min(maximum, Math.max(minimum, value));
+}
+
+function createGalleryPhoto(photo, index) {
+  const figure = document.createElement("figure");
+  const orientation = photo.width / photo.height > 1.12 ? "landscape" : "portrait";
+  figure.className = `gallery__photo gallery__photo--${orientation}`;
+  figure.dataset.galleryIndex = String(index);
+  figure.dataset.slot = String(index % 6);
+  figure.setAttribute("aria-hidden", "true");
+
+  const image = document.createElement("img");
+  image.alt = photo.alt || `Fotografía ${String(photo.number).padStart(2, "0")} de Esteban y Nicole`;
+  image.width = photo.width;
+  image.height = photo.height;
+  image.loading = "lazy";
+  image.decoding = "async";
+  image.dataset.gallerySrc = photo.src;
+  figure.append(image);
+  return figure;
+}
+
+function hydrateGalleryPhoto(photo) {
+  photo?.querySelectorAll("img[data-gallery-src]").forEach((image) => {
+    if (!image.hasAttribute("src")) {
+      image.loading = "eager";
+      image.src = image.dataset.gallerySrc;
+    }
+  });
+}
+
+function releaseGalleryPhoto(photo) {
+  photo?.querySelectorAll("img[src][data-gallery-src]").forEach((image) => image.removeAttribute("src"));
+}
+
+function setGalleryPhotoFrame(photo, opacity, blur) {
+  if (!photo) return;
+  photo.style.setProperty("--photo-opacity", opacity.toFixed(3));
+  photo.style.setProperty("--photo-blur", `${blur.toFixed(1)}px`);
+  photo.style.setProperty("--photo-offset", `${((1 - opacity) * 14).toFixed(1)}px`);
+  photo.classList.toggle("is-active", opacity > 0.01);
+  photo.setAttribute("aria-hidden", String(opacity < 0.18));
+}
+
+function easeGalleryTransition(progress) {
+  const easedInput = clamp((progress - galleryTransitionStart) / (1 - galleryTransitionStart), 0, 1);
+  return easedInput * easedInput * (3 - 2 * easedInput);
+}
+
+function updateGalleryStory() {
+  if (!galleryScroll || !galleryStage || !galleryPhotos.length) return;
+  const bounds = galleryScroll.getBoundingClientRect();
+  const stageHeight = galleryStage.offsetHeight || window.innerHeight;
+  if (bounds.top >= window.innerHeight || bounds.bottom <= 0) {
+    galleryPhotos.forEach((photo) => {
+      releaseGalleryPhoto(photo);
+      setGalleryPhotoFrame(photo, 0, 0);
+    });
+    return;
+  }
+
+  const photoCount = galleryPhotos.length;
+  const progress = clamp(-bounds.top / (stageHeight * galleryStepRatio), 0, photoCount + 1);
+  const currentIndex = Math.min(Math.floor(progress), photoCount - 1);
+  const firstVisibleIndex = Math.max(0, currentIndex - 5);
+  const lastLoadedIndex = Math.min(photoCount - 1, currentIndex + 1);
+  for (let index = firstVisibleIndex; index <= lastLoadedIndex; index += 1) {
+    hydrateGalleryPhoto(galleryPhotos[index]);
+  }
+
+  galleryPhotos.forEach((photo, index) => {
+    if (index < firstVisibleIndex || index > lastLoadedIndex) releaseGalleryPhoto(photo);
+  });
+
+  if (galleryMotionPreference.matches) {
+    const activeIndex = Math.min(Math.floor(progress), photoCount - 1);
+    galleryPhotos.forEach((photo, index) => {
+      const isVisible = index >= Math.max(0, activeIndex - 5) && index <= activeIndex;
+      setGalleryPhotoFrame(photo, isVisible ? 1 : 0, 0);
+    });
+    return;
+  }
+
+  if (progress >= photoCount) {
+    const finalFade = easeGalleryTransition(progress - photoCount);
+    galleryPhotos.forEach((photo, index) => {
+      const isVisible = index >= Math.max(0, photoCount - 6);
+      setGalleryPhotoFrame(photo, isVisible ? 1 - finalFade : 0, isVisible ? finalFade * 12 : 0);
+    });
+    return;
+  }
+
+  const fraction = progress - currentIndex;
+  const mix = easeGalleryTransition(fraction);
+  const incomingIndex = currentIndex + 1;
+  const outgoingIndex = currentIndex - 5;
+  const canSwapOldestPhoto = currentIndex >= 5 && incomingIndex < photoCount;
+  galleryPhotos.forEach((photo, index) => {
+    let opacity = 0;
+    let blur = 0;
+    if (index === incomingIndex && incomingIndex < photoCount) {
+      opacity = mix;
+      blur = (1 - mix) * 12;
+    } else if (canSwapOldestPhoto && index === outgoingIndex) {
+      opacity = 1 - mix;
+      blur = mix * 12;
+    } else if (index >= (canSwapOldestPhoto ? currentIndex - 4 : firstVisibleIndex) && index <= currentIndex) {
+      opacity = 1;
+    }
+    setGalleryPhotoFrame(photo, opacity, blur);
+  });
+}
+
+function queueGalleryStoryUpdate() {
+  if (galleryUpdateFrame) return;
+  galleryUpdateFrame = window.requestAnimationFrame(() => {
+    galleryUpdateFrame = 0;
+    updateGalleryStory();
+  });
+}
+
 function renderGallery() {
-  const grid = document.querySelector("[data-gallery-grid]");
-  if (!grid || !invitation.photos.gallery.length) return;
-  grid.replaceChildren();
-  invitation.photos.gallery.forEach((photo, index) => {
-    const figure = document.createElement("figure");
-    figure.className = "gallery__item";
-    figure.dataset.scrollReveal = "";
-    figure.dataset.photoNumber = String(photo.number);
-    if (tallGalleryPhotoNumbers.has(photo.number)) figure.classList.add("gallery__item--tall");
-    if (photo.number === 23 || photo.number === 46 || photo.number === 56) figure.classList.add("gallery__item--landscape");
-    if (photo.number === 46) figure.classList.add("gallery__item--uncropped");
-    const image = document.createElement("img");
-    image.alt = photo.alt || `Fotografía ${index + 1} de Esteban y Nicole`;
-    image.width = photo.width;
-    image.height = photo.height;
-    image.loading = "lazy";
-    image.decoding = "async";
-    image.src = photo.src;
-    figure.append(image);
-    grid.append(figure);
-  });
-  sizeGalleryItems(grid);
+  if (!galleryScroll || !invitation.photos.gallery.length) return;
+  galleryStage = document.createElement("div");
+  galleryStage.className = "gallery__stage";
+  galleryStage.setAttribute("role", "group");
+  galleryStage.setAttribute("aria-label", "Fotografías de Esteban y Nicole, una a una");
+  const photoLayer = document.createElement("div");
+  photoLayer.className = "gallery__photo-layer";
+  galleryPhotos = invitation.photos.gallery.map(createGalleryPhoto);
+  galleryPhotos.forEach((photo) => photoLayer.append(photo));
+  galleryStage.append(photoLayer);
+
+  const steps = document.createElement("div");
+  steps.className = "gallery__steps";
+  steps.setAttribute("aria-hidden", "true");
+  for (let index = 0; index < galleryPhotos.length + 1; index += 1) {
+    const step = document.createElement("div");
+    step.className = "gallery__step";
+    step.style.height = `${galleryStepRatio * 100}svh`;
+    steps.append(step);
+  }
+
+  galleryScroll.style.height = `${(galleryPhotos.length + 1) * galleryStepRatio * 100}svh`;
+  galleryScroll.replaceChildren(galleryStage, steps);
+  queueGalleryStoryUpdate();
 }
-
-function sizeGalleryItems(grid) {
-  if (!grid?.clientWidth) return;
-  const gridStyle = getComputedStyle(grid);
-  const columns = gridStyle.gridTemplateColumns.split(" ").length;
-  const columnGap = Number.parseFloat(gridStyle.columnGap) || 0;
-  const rowGap = Number.parseFloat(gridStyle.rowGap) || 0;
-  const rowUnit = Number.parseFloat(gridStyle.gridAutoRows) || 2;
-  const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-  const minTileHeight = rootFontSize * 8;
-  const doubleTileHeight = rootFontSize * (window.matchMedia("(min-width: 700px)").matches ? 15 : 11);
-  const columnWidth = (grid.clientWidth - columnGap * (columns - 1)) / columns;
-
-  grid.querySelectorAll(".gallery__item").forEach((figure) => {
-    const photoNumber = Number(figure.dataset.photoNumber);
-    const photo = invitation.photos.gallery.find((item) => item.number === photoNumber);
-    if (!photo) return;
-    const columnSpan = figure.classList.contains("gallery__item--landscape") ? 2 : 1;
-    const photoWidth = columnWidth * columnSpan + columnGap * (columnSpan - 1);
-    const naturalHeight = photoWidth * photo.height / photo.width;
-    const desiredHeight = tallGalleryPhotoNumbers.has(photoNumber)
-      ? doubleTileHeight * 2 + rowGap
-      : Math.max(minTileHeight, naturalHeight);
-    const rowSpan = Math.max(1, Math.ceil((desiredHeight + rowGap) / (rowUnit + rowGap)));
-    figure.style.gridColumnEnd = `span ${columnSpan}`;
-    figure.style.gridRowEnd = `span ${rowSpan}`;
-  });
-}
-
-let gallerySizeFrame = 0;
-window.addEventListener("resize", () => {
-  if (gallerySizeFrame) return;
-  gallerySizeFrame = window.requestAnimationFrame(() => {
-    gallerySizeFrame = 0;
-    const grid = document.querySelector("[data-gallery-grid]");
-    if (grid) sizeGalleryItems(grid);
-  });
-}, { passive: true });
 
 renderGallery();
-
-const galleryItems = document.querySelectorAll("[data-scroll-reveal]");
-if ("IntersectionObserver" in window) {
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.08, rootMargin: "0px 0px -7% 0px" });
-  galleryItems.forEach((item) => revealObserver.observe(item));
-} else {
-  galleryItems.forEach((item) => item.classList.add("is-visible"));
-}
+window.addEventListener("scroll", queueGalleryStoryUpdate, { passive: true });
+window.addEventListener("resize", queueGalleryStoryUpdate);
+galleryMotionPreference.addEventListener?.("change", queueGalleryStoryUpdate);
 
 const countdownTarget = new Date(invitation.eventDate).getTime();
 const countdownParts = {
