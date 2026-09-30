@@ -103,6 +103,20 @@ a { color: inherit; }
 .welcome h2, .event h2, .schedule h2, .location h2, .dress h2, .gallery h2, .rsvp h2 { margin: 0; font: 500 clamp(2.8rem, 12vw, 5.3rem)/0.98 var(--serif); letter-spacing: -0.07em; }
 h2 em { color: var(--taupe); font-weight: 500; }
 .welcome > p:last-of-type { max-width: 23rem; margin: 1.4rem 0 0; color: var(--ink-soft); font-size: 0.94rem; line-height: 1.7; }
+.music-invitation { width: min(100%, 23rem); margin-top: 1.4rem; overflow: hidden; border: 1px solid var(--stone); border-radius: 1rem; background: #fffdfa9c; box-shadow: 0 0.4rem 1.4rem #302b2708; }
+.music-invitation summary { display: flex; align-items: center; gap: 0.75rem; min-height: 4.25rem; padding: 0.65rem 0.8rem; list-style: none; cursor: pointer; }
+.music-invitation summary::-webkit-details-marker { display: none; }
+.music-invitation summary:focus-visible { outline: 2px solid var(--taupe); outline-offset: -3px; border-radius: 1rem; }
+.music-invitation__note { display: grid; flex: 0 0 2.55rem; width: 2.55rem; aspect-ratio: 1; place-items: center; border: 1px solid var(--stone); border-radius: 50%; color: var(--taupe); font-size: 1.25rem; }
+.music-invitation__copy { display: grid; gap: 0.18rem; min-width: 0; }
+.music-invitation__eyebrow { color: var(--ink-soft); font: 0.49rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.music-invitation__title { color: var(--ink); font-size: 0.78rem; font-weight: 600; }
+.music-invitation__toggle { display: grid; flex: 0 0 1.65rem; width: 1.65rem; aspect-ratio: 1; margin-left: auto; place-items: center; border: 1px solid var(--stone); border-radius: 50%; color: var(--taupe); font-size: 1.1rem; line-height: 1; transition: transform 180ms ease; }
+.music-invitation[open] .music-invitation__toggle { transform: rotate(45deg); }
+.music-invitation__player { padding: 0 0.55rem 0.65rem; }
+.music-invitation__player iframe { display: block; width: 100%; border: 0; border-radius: 0.75rem; }
+.music-invitation__player a { display: inline-flex; gap: 0.25rem; margin: 0.55rem 0.25rem 0; color: var(--ink-soft); font: 0.58rem var(--mono); text-decoration: none; }
+.music-invitation__player a:hover { color: var(--ink); }
 .hand-note { align-self: flex-end; margin: 1.25rem 0 0; color: var(--taupe); font: italic 1.2rem var(--serif); transform: rotate(-7deg); }
 .hand-note span { color: var(--ink); }
 
