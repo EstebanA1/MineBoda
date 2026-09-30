@@ -58,7 +58,7 @@ a { color: inherit; }
 .mosaic-tile img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.88); }
 .mosaic-tile img[data-collage-number="14"] { object-position: 56% center; }
 .mosaic-tile img[data-collage-number="23"] { object-position: 42% center; }
-.mosaic-tile img[data-collage-number="36"] { object-fit: contain; background: #c7baaa; }
+.mosaic-tile img[data-collage-number="36"] { object-fit: cover; object-position: center 48%; transform: scale(1.08); background: #c7baaa; }
 .mosaic-tile img[data-collage-number="43"] { object-position: 54% center; }
 .mosaic-tile img[data-collage-number="49"] { object-position: 56% 44%; }
 .mosaic-tile img[data-collage-number="51"] { object-position: 48% center; }
@@ -74,7 +74,7 @@ a { color: inherit; }
 .mosaic-tile--i { grid-area: i; }
 .mosaic-tile--j { grid-area: j; }
 .hero__shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, #302b2748 0%, #302b2712 28%, #302b2712 72%, #302b2755 100%); pointer-events: none; }
-.hero__topline { position: absolute; top: 4.7rem; right: 1.15rem; left: 1.15rem; display: flex; justify-content: space-between; gap: 1rem; color: var(--white); text-shadow: 0 1px 12px #0005; font: 0.52rem var(--mono); letter-spacing: 0.1em; }
+.hero__topline { position: absolute; top: 3.45rem; right: 1.15rem; left: 1.15rem; display: flex; justify-content: space-between; gap: 1rem; color: var(--white); text-shadow: 0 1px 12px #0005; font: 0.52rem var(--mono); letter-spacing: 0.1em; }
 .hero__content { position: absolute; top: 50%; left: 50%; width: max-content; max-width: calc(100vw - 1.5rem); padding: 0.7rem 0.5rem; transform: translate(-50%, -50%); border: 1px solid #fffefa; background: #f5f2edea; box-shadow: 0 1rem 3rem #302b2738; color: var(--ink); text-align: center; backdrop-filter: blur(8px); }
 .eyebrow { margin: 0 0 1.1rem; color: var(--taupe); font: 500 0.62rem/1.4 var(--mono); letter-spacing: 0.11em; text-transform: uppercase; }
 .hero__eyebrow { color: var(--taupe); display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.53rem; }
@@ -232,7 +232,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
   .site-header nav { gap: 1.2rem; font-size: 0.8rem; }
   .hero { min-height: 100svh; padding: 0; }
   .hero__collage { grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); grid-template-areas: "a b b c d" "a e f f d" "h e f f g" "h i i j g"; gap: 0.35rem; padding: 0.55rem; }
-  .hero__topline { font-size: 0.62rem; }
+  .hero__topline { top: 4rem; font-size: 0.62rem; }
   .hero__content { padding: 1rem 0.65rem; }
   .hero h1 { font-size: clamp(3.2rem, 6.5vw, 5rem); }
   .hero__names { margin-top: 1.1rem; font-size: 0.78rem; }
