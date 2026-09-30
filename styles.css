@@ -202,7 +202,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .dress__formal { margin: 0.3rem 0 0.5rem; color: var(--taupe) !important; font: 500 2rem var(--serif) !important; }
 .dress__burst { position: absolute; z-index: 2; right: 0.7rem; top: 1rem; display: grid; place-content: center; width: 5.4rem; aspect-ratio: 1; color: var(--ink); text-align: center; font: 0.64rem/1.2 var(--mono); transform: rotate(10deg); background: var(--beige); clip-path: polygon(50% 0%,61% 14%,77% 5%,81% 23%,99% 26%,89% 43%,100% 55%,83% 65%,92% 83%,72% 83%,65% 100%,50% 87%,35% 100%,28% 83%,8% 84%,17% 65%,0% 55%,11% 42%,1% 26%,20% 23%,24% 5%,40% 14%); }
 
-.gallery { padding-right: 0; padding-bottom: 0; padding-left: 0; background: var(--paper-dark); }
+.gallery { padding-right: 0; padding-bottom: 2.5rem; padding-left: 0; background: var(--paper-dark); }
 .gallery__heading { display: flex; flex-direction: column; align-items: flex-start; padding: 0 1.4rem; }
 .gallery__heading > p:last-child { max-width: 22rem; color: var(--ink-soft); font-size: 0.88rem; line-height: 1.6; }
 .gallery__scrolly { position: relative; margin-top: 2rem; }
@@ -234,7 +234,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .rsvp__deadline { max-width: 20rem; margin: 1.2rem 0 1.5rem; color: #f7f3ed; font-size: 0.82rem; line-height: 1.55; }
 .rsvp__deadline strong { color: var(--beige); font-weight: 600; }
 .rsvp__notice { max-width: 23rem; margin: 0; color: #f7f3ed; font-size: 0.78rem; line-height: 1.6; }
-.rsvp__scribble { position: absolute; right: 0.7rem; top: 25%; color: var(--beige); font: italic 1.05rem var(--serif); transform: rotate(-12deg); }
+.rsvp__scribble { position: absolute; right: 0.7rem; top: 12.5%; color: var(--beige); font: italic 1.05rem var(--serif); transform: rotate(-12deg); }
 
 .footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 1.1rem 1.4rem 1.35rem; background: var(--ink); color: var(--paper); }
 .footer .wordmark { flex: 0 0 auto; font-size: 1rem; white-space: nowrap; }
@@ -253,7 +253,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
   .hero__date { font-size: 1rem; margin-top: 1.6rem; }
   .hero__scroll { font-size: 0.68rem; }
   .section-pad { padding: 8rem 9vw; }
-  .gallery { padding-right: 0; padding-bottom: 0; padding-left: 0; }
+  .gallery { padding-right: 0; padding-bottom: 2.5rem; padding-left: 0; }
   .welcome { min-height: 37rem; }
   .welcome__mark { top: 7rem; right: 13vw; width: 4rem; font-size: 1.8rem; }
   .welcome > p:last-of-type { font-size: 1rem; }
@@ -292,7 +292,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
   .gallery__photo[data-slot="5"] { --photo-left: 71%; --photo-top: 54%; }
   .rsvp { min-height: 52rem; padding: 6rem 9vw; }
   .rsvp__content { margin-bottom: 2rem; }
-  .rsvp__scribble { right: 10%; top: 28%; font-size: 1.35rem; }
+  .rsvp__scribble { right: 10%; top: 14%; font-size: 1.35rem; }
   .footer { padding: 1.35rem 4vw; }
   .footer p { font-size: 0.7rem; }
 }
