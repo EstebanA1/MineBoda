@@ -103,12 +103,12 @@ a { color: inherit; }
 .welcome h2, .event h2, .schedule h2, .location h2, .dress h2, .gallery h2, .rsvp h2 { margin: 0; font: 500 clamp(2.8rem, 12vw, 5.3rem)/0.98 var(--serif); letter-spacing: -0.07em; }
 h2 em { color: var(--taupe); font-weight: 500; }
 .welcome > p:last-of-type { max-width: 23rem; margin: 1.4rem 0 0; color: var(--ink-soft); font-size: 0.94rem; line-height: 1.7; }
-.music-dock { position: fixed; z-index: 40; top: 50%; right: max(0.55rem, env(safe-area-inset-right)); transform: translateY(-50%); }
+.music-dock { position: fixed; z-index: 40; top: auto; right: max(0.55rem, env(safe-area-inset-right)); bottom: max(0.75rem, env(safe-area-inset-bottom)); transform: none; }
 .music-dock__toggle { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border: 1px solid #d8d0c7; border-radius: 50%; color: var(--ink); background: #f5f2edf2; box-shadow: 0 0.45rem 1.25rem #302b2733; backdrop-filter: blur(10px); cursor: pointer; font-size: 1.25rem; transition: color 180ms ease, background-color 180ms ease, transform 180ms ease; }
 .music-dock__toggle:hover { background: var(--white); transform: scale(1.04); }
 .music-dock__toggle:focus-visible { outline: 2px solid var(--taupe); outline-offset: 3px; }
 .music-dock__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
-.music-dock.needs-gesture::after, .music-dock.needs-file::after { position: absolute; top: 50%; right: calc(100% + 0.55rem); width: max-content; max-width: min(13rem, calc(100vw - 4rem)); padding: 0.5rem 0.7rem; transform: translateY(-50%); border: 1px solid var(--stone); border-radius: 99px; color: var(--ink); background: var(--paper); box-shadow: 0 0.4rem 1rem #302b2724; font: 0.57rem var(--mono); }
+.music-dock.needs-gesture::after, .music-dock.needs-file::after { position: absolute; right: 0; bottom: calc(100% + 0.55rem); width: max-content; max-width: min(13rem, calc(100vw - 4rem)); padding: 0.5rem 0.7rem; border: 1px solid var(--stone); border-radius: 99px; color: var(--ink); background: var(--paper); box-shadow: 0 0.4rem 1rem #302b2724; font: 0.57rem var(--mono); }
 .music-dock.needs-gesture::after { content: "Toca la pantalla para iniciar"; }
 .music-dock.needs-file::after { content: "No se pudo cargar la canción"; }
 .music-dock.is-playing .music-dock__toggle { color: var(--taupe); }
@@ -126,8 +126,6 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .placeholder-orbit { position: absolute; width: 65vw; max-width: 24rem; aspect-ratio: 0.8; border: 1px solid #fff6; border-radius: 49% 51% 47% 53%; transform: rotate(28deg); }
 .placeholder-orbit::before, .placeholder-orbit::after { content: ""; position: absolute; inset: 8%; border: 1px solid #fff4; border-radius: 52% 48% 53% 47%; transform: rotate(53deg); }
 .placeholder-orbit::after { inset: -8%; transform: rotate(96deg); }
-.story__counter { position: absolute; z-index: 3; right: 1.3rem; bottom: 2rem; font: 0.75rem var(--mono); letter-spacing: 0.08em; }
-.story__counter i { margin: 0 0.25rem; color: var(--beige); font-style: normal; }
 .story__vertical { position: absolute; z-index: 3; left: 1rem; bottom: 2rem; writing-mode: vertical-rl; transform: rotate(180deg); color: #ffffffb5; font: 0.53rem var(--mono); letter-spacing: 0.13em; }
 .story__chapters { position: relative; z-index: 1; }
 .story__chapter { min-height: 100svh; display: flex; align-items: flex-end; padding: 1.15rem 1rem 5.3rem; }
@@ -257,7 +255,6 @@ h2 em { color: var(--taupe); font-weight: 500; }
   .story__chapter { min-height: 100svh; align-items: center; padding: 2.5rem clamp(1.4rem, 4vw, 4.5rem); }
   .story__note { padding: 2rem; min-height: 15rem; }
   .story__vertical { left: 1.5rem; }
-  .story__counter { right: 1.5rem; }
   .event { grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.88fr); align-items: center; gap: clamp(3rem, 9vw, 9rem); }
   .event__image { min-height: min(62vw, 42rem); border-radius: 13rem 13rem 0.4rem 0.4rem; }
   .event__date-block { padding: 1.05rem 1.25rem; }

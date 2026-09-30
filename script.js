@@ -82,7 +82,6 @@ const storyFrame = document.querySelector('[data-photo-frame="story"]');
 const storyLayers = storyFrame ? [...storyFrame.querySelectorAll(".story__image")] : [];
 const storySection = storyFrame?.closest(".story");
 const chapters = [...document.querySelectorAll("[data-story-step]")];
-const sceneNumber = document.querySelector("[data-current-scene]");
 let visibleStoryLayer = -1;
 let requestedStoryIndex = -1;
 let storyLoadVersion = 0;
@@ -149,7 +148,6 @@ function updateStoryScene() {
 
   activeStoryStep = nextStep;
   chapters.forEach((chapter, index) => chapter.classList.toggle("is-current", index === nextStep));
-  if (sceneNumber) sceneNumber.textContent = String(nextStep + 1).padStart(2, "0");
   setStoryPhoto(invitation.photos.story[nextStep], nextStep);
 }
 
