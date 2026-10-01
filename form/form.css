@@ -29,7 +29,9 @@
 .rsvp-choice input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--taupe); }
 .rsvp-choice:has(input:checked) { border-color: var(--taupe); background: #a58b7410; }
 .rsvp-form__attendance { display: grid; gap: 1.25rem; padding: 1.2rem; border-left: 2px solid var(--taupe); background: #e8e3dc70; }
-.rsvp-form__attendance[hidden], .rsvp-form__companion[hidden] { display: none; }
+.rsvp-form__attendance.is-disabled { border-left-color: #a58b7470; }
+.rsvp-form__attendance.is-disabled > .rsvp-form__field,
+.rsvp-form__companion.is-disabled { opacity: 0.62; }
 .rsvp-form__submit { justify-self: start; min-width: 13rem; margin-top: 0.15rem; }
 .rsvp-form__submit:disabled { cursor: not-allowed; opacity: 0.55; transform: none; }
 .rsvp-form__status { min-height: 1.3em; margin: -0.8rem 0 0; color: #8a4e3d; font-size: 0.74rem; line-height: 1.5; }

@@ -40,7 +40,7 @@
             </div>
           </fieldset>
 
-          <div class="rsvp-form__attendance" data-party-fields hidden>
+          <div class="rsvp-form__attendance is-disabled" data-party-fields aria-disabled="true">
             <div class="rsvp-form__field">
               <label for="party-size">¿Cuántas personas asistirán?</label>
               <select id="party-size" name="partySize" required disabled>
@@ -49,7 +49,7 @@
               </select>
             </div>
 
-            <div class="rsvp-form__field rsvp-form__companion" data-companion-field hidden>
+            <div class="rsvp-form__field rsvp-form__companion is-disabled" data-companion-field aria-disabled="true">
               <label for="companion-name">Nombre y apellido de tu acompañante <span aria-hidden="true">*</span></label>
               <input id="companion-name" name="companionName" type="text" autocomplete="off" maxlength="120" disabled placeholder="Nombre y apellido" />
             </div>

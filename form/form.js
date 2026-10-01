@@ -6,8 +6,8 @@
   const submitButton = form.querySelector("[data-submit]");
   const status = form.querySelector("[data-form-status]");
   const partyFields = form.querySelector("[data-party-fields]");
-  const partyControls = [...partyFields.querySelectorAll("input, select, textarea")];
   const partySize = form.querySelector("#party-size");
+  const allergies = form.querySelector("#allergies");
   const companionField = form.querySelector("[data-companion-field]");
   const companionName = form.querySelector("#companion-name");
   const responseFrame = document.querySelector(".rsvp-form__response-frame");
@@ -21,11 +21,14 @@
 
   function updateConditionalFields() {
     const isAttending = selectedAttendance() === "yes";
-    partyFields.hidden = !isAttending;
-    partyControls.forEach((control) => { control.disabled = !isAttending; });
+    partyFields.classList.toggle("is-disabled", !isAttending);
+    partyFields.setAttribute("aria-disabled", String(!isAttending));
+    partySize.disabled = !isAttending;
+    allergies.disabled = !isAttending;
 
     const hasCompanion = isAttending && partySize.value === "2";
-    companionField.hidden = !hasCompanion;
+    companionField.classList.toggle("is-disabled", !hasCompanion);
+    companionField.setAttribute("aria-disabled", String(!hasCompanion));
     companionName.disabled = !hasCompanion;
     companionName.required = hasCompanion;
   }
