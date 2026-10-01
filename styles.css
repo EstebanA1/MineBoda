@@ -105,14 +105,14 @@ a { color: inherit; }
 h2 em { color: var(--taupe); font-weight: 500; }
 .welcome > p:last-of-type { max-width: 23rem; margin: 1.4rem 0 0; color: var(--ink-soft); font-size: 0.94rem; line-height: 1.7; }
 .music-dock { position: fixed; z-index: 40; top: auto; right: max(0.55rem, env(safe-area-inset-right)); bottom: max(0.75rem, env(safe-area-inset-bottom)); transform: none; }
-.music-dock__toggle { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border: 1px solid #d8d0c7; border-radius: 50%; color: var(--ink); background: #f5f2edf2; box-shadow: 0 0.45rem 1.25rem #302b2733; backdrop-filter: blur(10px); cursor: pointer; font-size: 1.25rem; transition: color 180ms ease, background-color 180ms ease, transform 180ms ease; }
+.music-dock__toggle { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border: 1px solid #d8d0c7; border-radius: 50%; color: var(--ink); background: #f5f2edf2; box-shadow: 0 0.45rem 1.25rem #302b2733; backdrop-filter: blur(10px); cursor: pointer; font-size: 1.25rem; transition: color 180ms ease, background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
 .music-dock__toggle:hover { background: var(--white); transform: scale(1.04); }
 .music-dock__toggle:focus-visible { outline: 2px solid var(--taupe); outline-offset: 3px; }
 .music-dock__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
 .music-dock.needs-gesture::after, .music-dock.needs-file::after { position: absolute; right: 0; bottom: calc(100% + 0.55rem); width: max-content; max-width: min(13rem, calc(100vw - 4rem)); padding: 0.5rem 0.7rem; border: 1px solid var(--stone); border-radius: 99px; color: var(--ink); background: var(--paper); box-shadow: 0 0.4rem 1rem #302b2724; font: 0.57rem var(--mono); }
 .music-dock.needs-gesture::after { content: "Toca la pantalla para iniciar"; }
 .music-dock.needs-file::after { content: "No se pudo cargar la canción"; }
-.music-dock.is-playing .music-dock__toggle { color: var(--taupe); }
+.music-dock.is-playing .music-dock__toggle { transform: scale(0.94); border-color: var(--taupe); color: var(--taupe); box-shadow: 0 0.25rem 0.8rem #302b273b, 0 0 0 2px #a58b7433; }
 .hand-note { align-self: flex-end; margin: 1.25rem 0 0; color: var(--taupe); font: italic 1.2rem var(--serif); transform: rotate(-7deg); }
 .hand-note span { color: var(--ink); }
 
@@ -164,8 +164,9 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .schedule__items { border-top: 1px solid #3c393549; }
 .schedule__item { display: grid; grid-template-columns: 3.6rem 2rem 1fr; align-items: center; gap: 0.6rem; padding: 1.05rem 0; border-bottom: 1px solid #3c393549; }
 .schedule__time { font: 0.76rem var(--mono); }
-.schedule__symbol { color: var(--taupe); font-size: 1.45rem; }
-.schedule__symbol--sun { color: #a58b74; }
+.schedule__symbol { display: grid; place-items: center; color: var(--taupe); font-size: 1.45rem; }
+.schedule__symbol svg { display: block; width: 1em; height: 1em; }
+.schedule__symbol--accent { color: #a58b74; }
 .schedule__item h3 { margin: 0; font: 500 1.45rem var(--serif); }
 .schedule__item p { margin: 0.2rem 0 0; color: var(--ink-soft); font-size: 0.74rem; }
 

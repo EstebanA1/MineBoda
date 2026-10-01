@@ -379,7 +379,6 @@ const musicDock = document.querySelector("[data-music-dock]");
 const musicToggle = musicDock?.querySelector("[data-music-toggle]");
 const weddingMusic = musicDock?.querySelector("[data-wedding-music]");
 const musicStatus = musicDock?.querySelector("[data-music-status]");
-const musicIcon = musicDock?.querySelector("[data-music-icon]");
 let musicGestureListenersInstalled = false;
 
 function setMusicStatus(message) {
@@ -392,7 +391,6 @@ function updateMusicDock() {
   musicDock.classList.toggle("is-playing", isPlaying);
   musicToggle?.setAttribute("aria-pressed", String(isPlaying));
   musicToggle?.setAttribute("aria-label", `${isPlaying ? "Pausar" : "Reanudar"} Volví a Nacer`);
-  if (musicIcon) musicIcon.textContent = isPlaying ? "Ⅱ" : "♫";
 }
 
 function removeMusicGestureListeners() {
