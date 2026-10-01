@@ -40,12 +40,13 @@ a { color: inherit; }
   justify-content: space-between; padding: 1rem 1.15rem; color: var(--white);
   transition: color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
 }
+.ornament-star { display: inline-block; width: 1em; height: 1em; flex: none; color: inherit; vertical-align: middle; }
 .wordmark { font-family: var(--serif); font-size: 1.35rem; text-decoration: none; letter-spacing: -0.12em; }
-.wordmark span { display: inline-block; color: var(--beige); font-family: var(--sans); font-size: 0.7em; margin: 0 0.32em; vertical-align: 0.16em; }
+.wordmark__star { width: 0.7em; height: 0.7em; margin: 0 0.32em; color: var(--beige); vertical-align: 0.16em; }
 .site-header nav { display: flex; align-items: center; gap: 0.45rem; font-size: 0.74rem; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-0.45rem); transition: opacity 180ms ease, transform 180ms ease, visibility 180ms; }
 .site-header.is-past-hero { color: var(--ink); border-bottom: 1px solid var(--stone); background: #f5f2edf2; box-shadow: 0 0.4rem 1.2rem #302b2710; backdrop-filter: blur(12px); }
 .site-header.is-past-hero nav { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
-.site-header.is-past-hero .wordmark span { color: var(--taupe); }
+.site-header.is-past-hero .wordmark__star { color: var(--taupe); }
 .site-header nav a { text-decoration: none; padding: 0.55rem 0.75rem; border: 1px solid transparent; border-radius: 99px; }
 .site-header nav a:first-child { text-shadow: 0 1px 10px #302b2766; }
 .site-header.is-past-hero nav a:first-child { text-shadow: none; }
@@ -144,7 +145,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .event { position: relative; z-index: 1; display: grid; gap: 2.5rem; background: var(--stone-light); }
 .event__copy { display: flex; flex-direction: column; align-items: flex-start; }
 .event__copy .eyebrow { margin-bottom: 1.1rem; }
-.eyebrow-star { font-size: 1rem; padding-right: 0.3rem; }
+.eyebrow-star { width: 1rem; height: 1rem; margin-right: 0.3rem; vertical-align: -0.12em; }
 .event__intro { max-width: 23rem; margin: 1.3rem 0 0; color: var(--ink-soft); line-height: 1.65; font-size: 0.9rem; }
 .event__date-block { position: relative; display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr 1fr; align-items: end; column-gap: 0.8rem; margin-top: 2rem; padding: 0.9rem 1rem; border: 1px solid #3c393561; border-radius: 0.2rem; }
 .event__day { grid-column: 1; grid-row: 1; font: 0.55rem var(--mono); letter-spacing: 0.15em; text-transform: uppercase; }
