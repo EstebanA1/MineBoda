@@ -42,7 +42,7 @@ a { color: inherit; }
 }
 .ornament-star { display: inline-block; width: 1em; height: 1em; flex: none; color: inherit; vertical-align: middle; }
 .wordmark { font-family: var(--serif); font-size: 1.35rem; text-decoration: none; letter-spacing: -0.12em; }
-.wordmark__star { width: 0.7em; height: 0.7em; margin: 0 0.32em; color: var(--beige); vertical-align: 0.16em; }
+.wordmark__star { width: 1.2em; height: 1.2em; margin: 0 0.32em; color: var(--beige); font-size: 0.7em; vertical-align: 0.05em; }
 .site-header nav { display: flex; align-items: center; gap: 0.45rem; font-size: 0.74rem; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-0.45rem); transition: opacity 180ms ease, transform 180ms ease, visibility 180ms; }
 .site-header.is-past-hero { color: var(--ink); border-bottom: 1px solid var(--stone); background: #f5f2edf2; box-shadow: 0 0.4rem 1.2rem #302b2710; backdrop-filter: blur(12px); }
 .site-header.is-past-hero nav { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
