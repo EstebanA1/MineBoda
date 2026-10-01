@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f2ed" />
+    <meta name="description" content="Confirma tu asistencia a la celebración de Esteban y Nicole." />
+    <title>Confirma tu asistencia · Esteban y Nicole</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="form.css" />
+    <script src="config.js" defer></script>
+    <script src="form.js" defer></script>
+  </head>
+  <body class="form-body">
+    <a class="skip-link" href="#contenido">Saltar al formulario</a>
+
+    <header class="site-header is-past-hero form-header">
+      <a class="wordmark" href="../#inicio" aria-label="Esteban y Nicole, inicio">E<span class="wordmark__separator" aria-hidden="true">·</span>N</a>
+      <a class="form-header__back" href="../#confirmar">Volver a la invitación <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main class="form-page" id="contenido">
+      <div class="form-page__ornament" aria-hidden="true"><span></span><span></span></div>
+      <section class="form-card" aria-labelledby="form-title">
+        <p class="eyebrow">Esteban y Nicole · 13.02.2027</p>
+        <h1 id="form-title">¿Nos<br /><em>acompañas?</em></h1>
+        <p class="form-card__intro">Nos encantará compartir este día contigo. Cuéntanos si podrás venir y así dejamos todo preparado.</p>
+
+        <form id="rsvp-form" class="rsvp-form" method="post" target="rsvp-response-frame" novalidate>
+          <div class="rsvp-form__field">
+            <label for="guest-name">Tu nombre y apellido <span aria-hidden="true">*</span></label>
+            <input id="guest-name" name="guestName" type="text" autocomplete="name" maxlength="120" required placeholder="Nombre y apellido" />
+          </div>
+
+          <fieldset class="rsvp-form__fieldset">
+            <legend>¿Podrás acompañarnos? <span aria-hidden="true">*</span></legend>
+            <div class="rsvp-form__choices">
+              <label class="rsvp-choice"><input type="radio" name="attendance" value="yes" required /><span>Sí, ahí estaré</span></label>
+              <label class="rsvp-choice"><input type="radio" name="attendance" value="no" required /><span>Lo siento, no podré</span></label>
+            </div>
+          </fieldset>
+
+          <div class="rsvp-form__attendance" data-party-fields hidden>
+            <div class="rsvp-form__field">
+              <label for="party-size">¿Cuántas personas asistirán?</label>
+              <select id="party-size" name="partySize" required disabled>
+                <option value="1" selected>1 persona</option>
+                <option value="2">2 personas</option>
+              </select>
+            </div>
+
+            <div class="rsvp-form__field rsvp-form__companion" data-companion-field hidden>
+              <label for="companion-name">Nombre y apellido de tu acompañante <span aria-hidden="true">*</span></label>
+              <input id="companion-name" name="companionName" type="text" autocomplete="off" maxlength="120" disabled placeholder="Nombre y apellido" />
+            </div>
+
+            <div class="rsvp-form__field">
+              <label for="allergies">Alergias o restricciones alimentarias</label>
+              <textarea id="allergies" name="allergies" rows="3" maxlength="500" disabled placeholder="Si corresponde, indica quién tiene la alergia y a qué alimento."></textarea>
+              <small>Si no tienes ninguna, puedes dejarlo en blanco.</small>
+            </div>
+          </div>
+
+          <div class="rsvp-form__field">
+            <label for="comments">Comentario <span>(opcional)</span></label>
+            <textarea id="comments" name="comments" rows="3" maxlength="1000" placeholder="Si quieres dejarnos unas palabras…"></textarea>
+          </div>
+
+          <div class="rsvp-form__honeypot" aria-hidden="true">
+            <label for="website">Deja este campo vacío</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button class="button button--dark rsvp-form__submit" type="submit" data-submit>Enviar respuesta <span aria-hidden="true">↗</span></button>
+          <p class="rsvp-form__status" data-form-status role="status" aria-live="polite"></p>
+          <p class="rsvp-form__privacy">Usaremos estos datos solo para organizar la celebración.</p>
+        </form>
+
+        <div class="rsvp-form__success" data-form-success hidden>
+          <span class="rsvp-form__success-mark" aria-hidden="true">✓</span>
+          <h2>¡Gracias!</h2>
+          <p data-success-copy>Recibimos tu respuesta. Nos vemos pronto.</p>
+          <a class="text-link" href="../#inicio">Volver a la invitación <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer form-footer">
+      <a class="wordmark" href="../#inicio" aria-label="Volver al inicio">E<span class="wordmark__separator" aria-hidden="true">·</span>N</a>
+      <p>Hecho con cariño, para compartirlo contigo.</p>
+      <a class="footer__top" href="../#inicio">Volver arriba ↑</a>
+    </footer>
+
+    <iframe class="rsvp-form__response-frame" name="rsvp-response-frame" title="Respuesta del formulario" aria-hidden="true" tabindex="-1"></iframe>
+  </body>
+</html>

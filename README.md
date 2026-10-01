@@ -10,12 +10,12 @@ Copia las imágenes originales en la carpeta `fotos/por-revisar/`. Las versiones
 
 - Pareja: Esteban y Nicole.
 - Fecha de muestra: sábado 13 de febrero de 2027.
-- Ceremonia: 18:00. Celebración: 20:00.
+- Itinerario tentativo: ceremonia 18:00; cóctel y fotografías 19:00; cena 20:30; brindis y actividades 22:00; baile 23:30.
 - Lugar propuesto: Espacio Los Aromos, Lagunillas, Coronel.
 - Confirmación sugerida hasta el 13 de diciembre de 2026.
 - Vestimenta formal; se pide a las invitadas evitar el blanco.
 
-Los medios para confirmar asistencia se agregarán antes de compartir la invitación.
+El cierre enlaza al formulario en `/form/`. Para activar el envío de respuestas a una hoja privada de Google Sheets, sigue los pasos de [RSVP_SETUP.md](RSVP_SETUP.md) y configura `form/config.js`.
 
 La fecha, el horario y el espacio son propuestas inventadas para dar forma a la maqueta. Conviene reemplazarlos antes de compartir la invitación con los invitados.
 
