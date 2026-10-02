@@ -14,6 +14,13 @@
   const successPanel = document.querySelector("[data-form-success]");
   const successCopy = document.querySelector("[data-success-copy]");
   let waitingForResponse = false;
+  let activeRequestId = "";
+
+  function createRequestId() {
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
 
   function selectedAttendance() {
     return form.querySelector('input[name="attendance"]:checked')?.value || "";
@@ -62,6 +69,8 @@
       return;
     }
 
+    activeRequestId = createRequestId();
+    form.elements.namedItem("requestId").value = activeRequestId;
     waitingForResponse = true;
     submitButton.disabled = true;
     status.textContent = "Enviando tu respuesta…";
@@ -75,7 +84,7 @@
 
   window.addEventListener("message", (event) => {
     const trustedGoogleOrigin = event.origin === "https://script.google.com" || event.origin.endsWith(".googleusercontent.com");
-    if (event.source !== responseFrame.contentWindow || !trustedGoogleOrigin || event.data?.type !== "mineboda-rsvp-result") return;
+    if (!trustedGoogleOrigin || event.data?.type !== "mineboda-rsvp-result" || event.data?.requestId !== activeRequestId || !waitingForResponse) return;
 
     waitingForResponse = false;
     submitButton.disabled = false;

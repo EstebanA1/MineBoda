@@ -20,6 +20,10 @@ La página de confirmación vive en `form/index.html` y se publica como `https:/
 
 8. Cuando esté lista, publica los cambios del repositorio en Vercel. Antes de compartir el enlace, envía una respuesta de prueba y confirma que aparece como una fila nueva en la pestaña `RSVP`.
 
+## Actualizar el Apps Script después de editarlo
+
+Si cambias `form/apps-script/Code.gs`, copia también esos cambios en el editor de Apps Script y guarda. Luego abre **Implementar → Gestionar implementaciones**, edita la implementación de aplicación web, selecciona **Nueva versión** y pulsa **Implementar**. Al editar la implementación existente, conserva la URL `/exec` configurada en `form/config.js`.
+
 La hoja puede quedarse privada: el Apps Script se ejecuta con tu cuenta y solo añade respuestas. La web pública no tiene permiso para leer la hoja. No compartas el acceso a la hoja con los invitados.
 
 ## Campos que se guardan

@@ -15,12 +15,13 @@ function setupSheet() {
 
 function doPost(event) {
   const params = event && event.parameter ? event.parameter : {};
+  const requestId = /^[a-f0-9]{32}$/.test(String(params.requestId || "")) ? String(params.requestId) : "";
 
   // Bots que llenan el campo trampa reciben una respuesta genérica sin escribir en la hoja.
-  if (String(params.website || "").trim()) return resultPage_({ ok: true, code: "saved" });
+  if (String(params.website || "").trim()) return resultPage_({ ok: true, code: "saved" }, requestId);
 
   const response = validateResponse_(params);
-  if (!response) return resultPage_({ ok: false, code: "invalid" });
+  if (!response) return resultPage_({ ok: false, code: "invalid" }, requestId);
 
   const lock = LockService.getScriptLock();
   try {
@@ -32,7 +33,7 @@ function doPost(event) {
     if (lastRow > 1) {
       const existingNames = sheet.getRange(2, 2, lastRow - 1, 1).getDisplayValues();
       const isDuplicate = existingNames.some(([name]) => normalizeName_(name) === nameKey);
-      if (isDuplicate) return resultPage_({ ok: false, code: "duplicate" });
+      if (isDuplicate) return resultPage_({ ok: false, code: "duplicate" }, requestId);
     }
 
     sheet.appendRow([
@@ -44,10 +45,10 @@ function doPost(event) {
       safeCell_(response.allergies),
       safeCell_(response.comments)
     ]);
-    return resultPage_({ ok: true, code: "saved" });
+    return resultPage_({ ok: true, code: "saved" }, requestId);
   } catch (error) {
     console.error(error);
-    return resultPage_({ ok: false, code: "error" });
+    return resultPage_({ ok: false, code: "error" }, requestId);
   } finally {
     if (lock.hasLock()) lock.releaseLock();
   }
@@ -104,13 +105,13 @@ function safeCell_(value) {
   return /^[=+\-@]/.test(text) ? "'" + text : text;
 }
 
-function resultPage_(result) {
-  const message = JSON.stringify({ type: "mineboda-rsvp-result", ...result })
+function resultPage_(result, requestId) {
+  const message = JSON.stringify({ type: "mineboda-rsvp-result", ...result, requestId })
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026");
   const html = "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>" +
-    "<script>window.parent.postMessage(" + message + ", '*');</script></body></html>";
+    "<script>window.top.postMessage(" + message + ", '*');</script></body></html>";
 
   return HtmlService.createHtmlOutput(html)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
