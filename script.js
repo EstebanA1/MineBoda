@@ -397,9 +397,13 @@ function removeMusicGestureListeners() {
   musicGestureListenersInstalled = false;
   document.removeEventListener("pointerdown", retryMusicAfterGesture, true);
   document.removeEventListener("keydown", retryMusicAfterGesture, true);
+  document.removeEventListener("touchstart", retryMusicAfterGesture, true);
+  document.removeEventListener("wheel", retryMusicAfterGesture, true);
 }
 
 function retryMusicAfterGesture(event) {
+  // A downward wheel/trackpad scroll is itself a user gesture; ignore upward scrolling.
+  if (event.type === "wheel" && event.deltaY <= 0) return;
   if (event.target instanceof Element && event.target.closest("[data-music-toggle]")) return;
   removeMusicGestureListeners();
   if (weddingMusic?.paused && !weddingMusic.error) void attemptMusicPlayback();
@@ -410,6 +414,8 @@ function waitForMusicGesture() {
   musicGestureListenersInstalled = true;
   document.addEventListener("pointerdown", retryMusicAfterGesture, true);
   document.addEventListener("keydown", retryMusicAfterGesture, true);
+  document.addEventListener("touchstart", retryMusicAfterGesture, { capture: true, passive: true });
+  document.addEventListener("wheel", retryMusicAfterGesture, { capture: true, passive: true });
 }
 
 async function attemptMusicPlayback() {
@@ -426,7 +432,7 @@ async function attemptMusicPlayback() {
       setMusicStatus("Añade la canción como audio/volvi-a-nacer.mp3 para reproducirla.");
     } else if (error?.name === "NotAllowedError") {
       musicDock?.classList.add("needs-gesture");
-      setMusicStatus("El navegador bloqueó el inicio automático. Toca la página o el botón ♫ para iniciar la canción.");
+      setMusicStatus("El navegador bloqueó el inicio automático. Desplázate, toca la página o el botón ♫ para iniciar la canción.");
       waitForMusicGesture();
     } else {
       setMusicStatus("No se pudo iniciar la música. Abre los controles para intentarlo otra vez.");
