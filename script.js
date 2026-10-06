@@ -116,6 +116,7 @@ function setStoryPhoto(photo, index) {
     storyFrame.classList.add("has-photo");
   };
   nextLayer.alt = photo.alt || `Fotografía destacada ${String(index + 1).padStart(2, "0")}`;
+  nextLayer.dataset.storyIndex = String(index);
   nextLayer.onload = reveal;
   nextLayer.onerror = () => {
     if (requestVersion === storyLoadVersion) requestedStoryIndex = -1;
