@@ -277,10 +277,9 @@ function updateGalleryStory() {
   }
 
   if (progress >= photoCount) {
-    const finalFade = easeGalleryTransition(progress - photoCount);
     galleryPhotos.forEach((photo, index) => {
       const isVisible = index >= Math.max(0, photoCount - 6);
-      setGalleryPhotoFrame(photo, isVisible ? 1 - finalFade : 0, isVisible ? finalFade * 12 : 0);
+      setGalleryPhotoFrame(photo, isVisible ? 1 : 0, 0);
     });
     return;
   }
