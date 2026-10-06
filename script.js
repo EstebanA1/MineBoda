@@ -326,7 +326,8 @@ function renderGallery() {
   galleryPhotos.forEach((photo) => photoLayer.append(photo));
   galleryStage.append(photoLayer);
 
-  galleryScroll.style.height = `${(galleryPhotos.length + 1) * galleryStepRatio * 100}svh`;
+  // A sticky stage needs its own viewport of runway plus the scroll distance for every photo.
+  galleryScroll.style.height = `calc(100svh + ${(galleryPhotos.length + 1) * galleryStepRatio * 100}svh)`;
   galleryScroll.replaceChildren(galleryStage);
   queueGalleryStoryUpdate();
 }
