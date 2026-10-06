@@ -40,7 +40,7 @@ a { color: inherit; }
   justify-content: space-between; padding: 1rem 1.15rem; color: var(--white);
   transition: color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
 }
-.ornament-wedding { display: inline-block; width: 1em; height: 1em; flex: none; color: inherit; vertical-align: middle; }
+.ornament-icon { display: inline-block; width: 1em; height: 1em; flex: none; color: inherit; vertical-align: middle; }
 .wordmark { font-family: var(--serif); font-size: 1.35rem; text-decoration: none; letter-spacing: -0.12em; }
 .wordmark__separator { display: inline-block; color: var(--beige); font-family: var(--sans); font-size: 0.7em; line-height: 1; margin: 0 0.48em; vertical-align: 0.04em; }
 .site-header nav { display: flex; align-items: center; gap: 0.45rem; font-size: 0.74rem; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-0.45rem); transition: opacity 180ms ease, transform 180ms ease, visibility 180ms; }
@@ -139,7 +139,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .story__note > p:not(.eyebrow) { max-width: 20rem; margin: 0.85rem 0 0; color: var(--ink-soft); font-size: 0.82rem; line-height: 1.55; }
 .doodle { position: absolute; right: 1rem; top: 1rem; color: var(--taupe); font-size: 1.7rem; transform: rotate(11deg); }
 .doodle--heart { top: 1.15rem; transform: rotate(-15deg); }
-.doodle--rings { color: #a58b74; }
+.doodle--venue { color: #a58b74; }
 .text-link { display: inline-flex; gap: 0.45rem; margin-top: 1rem; color: var(--ink); font-size: 0.77rem; font-weight: 700; text-decoration-color: var(--taupe); text-underline-offset: 0.25rem; }
 
 .event { position: relative; z-index: 1; display: grid; gap: 2.5rem; background: var(--stone-light); }
@@ -189,7 +189,6 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .map-ring--two { right: -8rem; bottom: -10rem; width: 22rem; }
 .map-path { position: absolute; left: 15%; top: 38%; width: 88%; height: 4rem; border: 2px solid #a58b7499; border-color: #a58b7499 transparent transparent; border-radius: 50%; transform: rotate(-27deg); }
 .map-pin { position: absolute; left: 51%; top: 43%; color: var(--taupe); font-size: 2.3rem; transform: translate(-50%, -50%); }
-.map-pin b { position: absolute; left: 50%; bottom: -0.05rem; width: 0.45rem; height: 0.45rem; border: 1px solid var(--taupe); border-radius: 50%; transform: translateX(-50%); }
 .map-label { position: absolute; color: #756b60; font: 0.48rem var(--mono); letter-spacing: 0.14em; }
 .map-label--top { top: 14%; right: 13%; }
 .map-label--bottom { left: 13%; bottom: 15%; }
