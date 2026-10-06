@@ -475,6 +475,7 @@ const formRoute = document.querySelector("[data-form-route]");
 if (invitationRoute && formRoute) {
   const formUrl = new URL("form/", document.baseURI);
   const homeUrl = new URL("./", document.baseURI);
+  const localFileMode = window.location.protocol === "file:";
   const invitationTitle = document.title;
   const invitationMain = invitationRoute.querySelector("#contenido");
   let formMarkupLoaded = false;
@@ -528,10 +529,13 @@ if (invitationRoute && formRoute) {
     invitationScrollY = window.scrollY;
     try {
       if (!formMarkupLoaded) {
-        const response = await fetch(formUrl.href);
-        if (!response.ok) throw new Error(`No se pudo cargar el formulario (${response.status}).`);
-        const page = new DOMParser().parseFromString(await response.text(), "text/html");
-        formRoute.innerHTML = page.body.innerHTML;
+        const template = document.querySelector("#rsvp-form-template");
+        if (!template) throw new Error("No se encontró la plantilla del formulario.");
+        formRoute.replaceChildren(template.content.cloneNode(true));
+        if (localFileMode) {
+          formRoute.querySelectorAll('a[href="#inicio"]').forEach((link) => link.setAttribute("href", "#inicio"));
+          formRoute.querySelectorAll('a[href="#confirmar"]').forEach((link) => link.setAttribute("href", "#confirmar"));
+        }
         formMarkupLoaded = true;
       }
       await loadFormAssets();
@@ -542,7 +546,10 @@ if (invitationRoute && formRoute) {
     }
 
     openingForm = false;
-    if (pushHistory) history.pushState({ route: "rsvp" }, "", formUrl.pathname);
+    if (pushHistory) {
+      if (localFileMode) history.pushState({ route: "rsvp" }, "");
+      else history.pushState({ route: "rsvp" }, "", formUrl.pathname);
+    }
     showingForm = true;
     invitationRoute.hidden = true;
     if (invitationMain) invitationMain.id = "contenido-invitacion";
@@ -562,7 +569,10 @@ if (invitationRoute && formRoute) {
     document.body.classList.remove("form-body");
     document.title = invitationTitle;
 
-    if (pushHistory) history.pushState({ route: "invitation" }, "", `${homeUrl.pathname}${hash || ""}`);
+    if (pushHistory) {
+      if (localFileMode) history.pushState({ route: "invitation" }, "");
+      else history.pushState({ route: "invitation" }, "", `${homeUrl.pathname}${hash || ""}`);
+    }
     requestAnimationFrame(() => {
       if (hash) document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
       else window.scrollTo(0, restoreScroll ? invitationScrollY : 0);
@@ -582,14 +592,17 @@ if (invitationRoute && formRoute) {
       return;
     }
 
-    if (showingForm && destination.origin === homeUrl.origin && destination.pathname === homeUrl.pathname) {
+    const isInvitationDestination = localFileMode
+      ? destination.origin === window.location.origin && destination.pathname === window.location.pathname
+      : destination.origin === homeUrl.origin && destination.pathname === homeUrl.pathname;
+    if (showingForm && isInvitationDestination) {
       event.preventDefault();
       showInvitation({ hash: destination.hash });
     }
   });
 
-  window.addEventListener("popstate", () => {
-    if (window.location.pathname === formUrl.pathname) void showForm(false);
+  window.addEventListener("popstate", (event) => {
+    if (event.state?.route === "rsvp" || (!localFileMode && window.location.pathname === formUrl.pathname)) void showForm(false);
     else showInvitation({ pushHistory: false, hash: window.location.hash, restoreScroll: true });
   });
 }
