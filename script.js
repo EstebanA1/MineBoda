@@ -468,3 +468,128 @@ if (musicDock && musicToggle && weddingMusic) {
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   document.documentElement.classList.add("reduce-motion");
 }
+
+// Keep the music element mounted while opening the RSVP form as an in-page route.
+const invitationRoute = document.querySelector("[data-invitation-route]");
+const formRoute = document.querySelector("[data-form-route]");
+if (invitationRoute && formRoute) {
+  const formUrl = new URL("form/", document.baseURI);
+  const homeUrl = new URL("./", document.baseURI);
+  const invitationTitle = document.title;
+  const invitationMain = invitationRoute.querySelector("#contenido");
+  let formMarkupLoaded = false;
+  let showingForm = false;
+  let openingForm = false;
+  let invitationScrollY = window.scrollY;
+
+  function loadScriptOnce(id, src) {
+    const existing = document.getElementById(id);
+    if (existing) {
+      if (existing.dataset.loaded === "true") return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        existing.addEventListener("load", resolve, { once: true });
+        existing.addEventListener("error", reject, { once: true });
+      });
+    }
+
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.id = id;
+      script.src = src;
+      script.onload = () => {
+        script.dataset.loaded = "true";
+        resolve();
+      };
+      script.onerror = reject;
+      document.head.append(script);
+    });
+  }
+
+  async function loadFormAssets() {
+    if (!document.getElementById("rsvp-form-styles")) {
+      await new Promise((resolve, reject) => {
+        const link = document.createElement("link");
+        link.id = "rsvp-form-styles";
+        link.rel = "stylesheet";
+        link.href = new URL("form/form.css", document.baseURI).href;
+        link.onload = resolve;
+        link.onerror = reject;
+        document.head.append(link);
+      });
+    }
+    await loadScriptOnce("rsvp-config-script", new URL("form/config.js", document.baseURI).href);
+    await loadScriptOnce("rsvp-form-script", new URL("form/form.js", document.baseURI).href);
+    window.initRsvpForm?.();
+  }
+
+  async function showForm(pushHistory = true) {
+    if (showingForm || openingForm) return;
+    openingForm = true;
+    invitationScrollY = window.scrollY;
+    try {
+      if (!formMarkupLoaded) {
+        const response = await fetch(formUrl.href);
+        if (!response.ok) throw new Error(`No se pudo cargar el formulario (${response.status}).`);
+        const page = new DOMParser().parseFromString(await response.text(), "text/html");
+        formRoute.innerHTML = page.body.innerHTML;
+        formMarkupLoaded = true;
+      }
+      await loadFormAssets();
+    } catch (error) {
+      console.error("No se pudo abrir el formulario sin recargar la página:", error);
+      window.location.assign(formUrl.href);
+      return;
+    }
+
+    openingForm = false;
+    if (pushHistory) history.pushState({ route: "rsvp" }, "", formUrl.pathname);
+    showingForm = true;
+    invitationRoute.hidden = true;
+    if (invitationMain) invitationMain.id = "contenido-invitacion";
+    formRoute.hidden = false;
+    document.body.classList.add("form-body");
+    document.title = "Confirma tu asistencia · Esteban y Nicole";
+    window.scrollTo(0, 0);
+  }
+
+  function showInvitation({ pushHistory = true, hash = "", restoreScroll = false } = {}) {
+    if (!showingForm) return;
+    window.destroyRsvpForm?.();
+    showingForm = false;
+    formRoute.hidden = true;
+    if (invitationMain) invitationMain.id = "contenido";
+    invitationRoute.hidden = false;
+    document.body.classList.remove("form-body");
+    document.title = invitationTitle;
+
+    if (pushHistory) history.pushState({ route: "invitation" }, "", `${homeUrl.pathname}${hash || ""}`);
+    requestAnimationFrame(() => {
+      if (hash) document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo(0, restoreScroll ? invitationScrollY : 0);
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+
+    const destination = new URL(link.href, window.location.href);
+    if (!showingForm && destination.origin === formUrl.origin && destination.pathname === formUrl.pathname) {
+      event.preventDefault();
+      void showForm();
+      return;
+    }
+
+    if (showingForm && destination.origin === homeUrl.origin && destination.pathname === homeUrl.pathname) {
+      event.preventDefault();
+      showInvitation({ hash: destination.hash });
+    }
+  });
+
+  window.addEventListener("popstate", () => {
+    if (window.location.pathname === formUrl.pathname) void showForm(false);
+    else showInvitation({ pushHistory: false, hash: window.location.hash, restoreScroll: true });
+  });
+}

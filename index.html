@@ -12,16 +12,6 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
-
-    <header class="site-header">
-      <a class="wordmark" href="#inicio" aria-label="Esteban y Nicole, inicio">E<span class="wordmark__separator" aria-hidden="true">·</span>N</a>
-      <nav aria-label="Navegación principal">
-        <a href="#el-dia">El día</a>
-        <a class="nav-rsvp" href="#confirmar">RSVP <span aria-hidden="true">↗</span></a>
-      </nav>
-    </header>
-
     <aside class="music-dock" data-music-dock aria-label="Reproductor de música">
       <audio data-wedding-music src="audio/volvi-a-nacer.mp3" loop preload="none"></audio>
       <p class="music-dock__status" data-music-status role="status" aria-live="polite"></p>
@@ -29,6 +19,17 @@
         <span aria-hidden="true">♫</span>
       </button>
     </aside>
+
+    <div data-invitation-route>
+      <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+      <header class="site-header">
+        <a class="wordmark" href="#inicio" aria-label="Esteban y Nicole, inicio">E<span class="wordmark__separator" aria-hidden="true">·</span>N</a>
+        <nav aria-label="Navegación principal">
+          <a href="#el-dia">El día</a>
+          <a class="nav-rsvp" href="#confirmar">RSVP <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
 
     <main id="contenido">
       <section class="hero" id="inicio" aria-labelledby="hero-title">
@@ -248,5 +249,8 @@
         <a href="#inicio" class="footer__top">Volver arriba ↑</a>
       </footer>
     </main>
+    </div>
+
+    <div data-form-route hidden></div>
   </body>
 </html>

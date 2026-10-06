@@ -1,6 +1,7 @@
-(() => {
+function initRsvpForm() {
   const form = document.querySelector("#rsvp-form");
-  if (!form) return;
+  if (!form || form.dataset.rsvpInitialized === "true") return;
+  form.dataset.rsvpInitialized = "true";
 
   const endpoint = String(window.RSVP_CONFIG?.endpoint || "").trim();
   const submitButton = form.querySelector("[data-submit]");
@@ -15,6 +16,7 @@
   const successCopy = document.querySelector("[data-success-copy]");
   let waitingForResponse = false;
   let activeRequestId = "";
+  let responseTimeoutId = 0;
 
   function createRequestId() {
     const bytes = new Uint8Array(16);
@@ -40,26 +42,7 @@
     companionName.required = hasCompanion;
   }
 
-  form.addEventListener("change", updateConditionalFields);
-  updateConditionalFields();
-
-  if (!endpoint) {
-    submitButton.disabled = true;
-    status.textContent = "El formulario está listo; falta conectarlo con Google Sheets.";
-    return;
-  }
-
-  try {
-    const url = new URL(endpoint);
-    if (url.protocol !== "https:" || !url.pathname.endsWith("/exec")) throw new Error("URL no válida");
-    form.action = url.href;
-  } catch {
-    submitButton.disabled = true;
-    status.textContent = "La dirección de envío aún no está configurada correctamente.";
-    return;
-  }
-
-  form.addEventListener("submit", (event) => {
+  function handleSubmit(event) {
     if (!form.reportValidity()) {
       event.preventDefault();
       return;
@@ -74,19 +57,20 @@
     waitingForResponse = true;
     submitButton.disabled = true;
     status.textContent = "Enviando tu respuesta…";
-    window.setTimeout(() => {
+    responseTimeoutId = window.setTimeout(() => {
       if (!waitingForResponse) return;
       waitingForResponse = false;
       submitButton.disabled = false;
       status.textContent = "La respuesta está tardando más de lo esperado. Revisa tu conexión e inténtalo de nuevo.";
     }, 30000);
-  });
+  }
 
-  window.addEventListener("message", (event) => {
+  function handleMessage(event) {
     const trustedGoogleOrigin = event.origin === "https://script.google.com" || event.origin.endsWith(".googleusercontent.com");
     if (!trustedGoogleOrigin || event.data?.type !== "mineboda-rsvp-result" || event.data?.requestId !== activeRequestId || !waitingForResponse) return;
 
     waitingForResponse = false;
+    window.clearTimeout(responseTimeoutId);
     submitButton.disabled = false;
 
     if (event.data.ok) {
@@ -104,5 +88,44 @@
       : event.data.code === "invalid"
         ? "Revisa los datos ingresados e inténtalo nuevamente."
         : "No se pudo guardar la respuesta. Inténtalo nuevamente en un momento.";
-  });
-})();
+  }
+
+  form.addEventListener("change", updateConditionalFields);
+  updateConditionalFields();
+
+  window.destroyRsvpForm = () => {
+    window.clearTimeout(responseTimeoutId);
+    window.removeEventListener("message", handleMessage);
+    form.removeEventListener("change", updateConditionalFields);
+    form.removeEventListener("submit", handleSubmit);
+    delete form.dataset.rsvpInitialized;
+    delete window.destroyRsvpForm;
+  };
+
+  if (!endpoint) {
+    submitButton.disabled = true;
+    status.textContent = "El formulario está listo; falta conectarlo con Google Sheets.";
+    return;
+  }
+
+  try {
+    const url = new URL(endpoint);
+    if (url.protocol !== "https:" || !url.pathname.endsWith("/exec")) throw new Error("URL no válida");
+    form.action = url.href;
+  } catch {
+    submitButton.disabled = true;
+    status.textContent = "La dirección de envío aún no está configurada correctamente.";
+    return;
+  }
+
+  form.addEventListener("submit", handleSubmit);
+  window.addEventListener("message", handleMessage);
+}
+
+window.initRsvpForm = initRsvpForm;
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initRsvpForm, { once: true });
+} else {
+  initRsvpForm();
+}
