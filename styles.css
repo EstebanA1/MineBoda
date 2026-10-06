@@ -40,7 +40,7 @@ a { color: inherit; }
   justify-content: space-between; padding: 1rem 1.15rem; color: var(--white);
   transition: color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
 }
-.ornament-star { display: inline-block; width: 1em; height: 1em; flex: none; color: inherit; vertical-align: middle; }
+.ornament-wedding { display: inline-block; width: 1em; height: 1em; flex: none; color: inherit; vertical-align: middle; }
 .wordmark { font-family: var(--serif); font-size: 1.35rem; text-decoration: none; letter-spacing: -0.12em; }
 .wordmark__separator { display: inline-block; color: var(--beige); font-family: var(--sans); font-size: 0.7em; line-height: 1; margin: 0 0.48em; vertical-align: 0.04em; }
 .site-header nav { display: flex; align-items: center; gap: 0.45rem; font-size: 0.74rem; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-0.45rem); transition: opacity 180ms ease, transform 180ms ease, visibility 180ms; }
@@ -114,7 +114,6 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .music-dock.needs-file::after { content: "No se pudo cargar la canción"; }
 .music-dock.is-playing .music-dock__toggle { transform: scale(0.94); border-color: var(--taupe); color: var(--taupe); box-shadow: 0 0.25rem 0.8rem #302b273b, 0 0 0 2px #a58b7433; }
 .hand-note { align-self: flex-end; margin: 1.25rem 0 0; color: var(--taupe); font: italic 1.2rem var(--serif); transform: rotate(-7deg); }
-.hand-note span { color: var(--ink); }
 
 .story { position: relative; display: block; background: #62594f; color: var(--white); }
 .story__visual { position: sticky; z-index: 0; top: 0; height: 100svh; margin-bottom: -100svh; }
@@ -140,13 +139,13 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .story__note > p:not(.eyebrow) { max-width: 20rem; margin: 0.85rem 0 0; color: var(--ink-soft); font-size: 0.82rem; line-height: 1.55; }
 .doodle { position: absolute; right: 1rem; top: 1rem; color: var(--taupe); font-size: 1.7rem; transform: rotate(11deg); }
 .doodle--heart { top: 1.15rem; transform: rotate(-15deg); }
-.doodle--sun { color: #a58b74; }
+.doodle--rings { color: #a58b74; }
 .text-link { display: inline-flex; gap: 0.45rem; margin-top: 1rem; color: var(--ink); font-size: 0.77rem; font-weight: 700; text-decoration-color: var(--taupe); text-underline-offset: 0.25rem; }
 
 .event { position: relative; z-index: 1; display: grid; gap: 2.5rem; background: var(--stone-light); }
 .event__copy { display: flex; flex-direction: column; align-items: flex-start; }
 .event__copy .eyebrow { margin-bottom: 1.1rem; }
-.eyebrow-star { width: 1rem; height: 1rem; margin-right: 0.3rem; vertical-align: -0.12em; }
+.eyebrow-icon { width: 1rem; height: 1rem; margin-right: 0.3rem; vertical-align: -0.12em; }
 .event__intro { max-width: 23rem; margin: 1.3rem 0 0; color: var(--ink-soft); line-height: 1.65; font-size: 0.9rem; }
 .event__date-block { position: relative; display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr 1fr; align-items: end; column-gap: 0.8rem; margin-top: 2rem; padding: 0.9rem 1rem; border: 1px solid #3c393561; border-radius: 0.2rem; }
 .event__day { grid-column: 1; grid-row: 1; font: 0.55rem var(--mono); letter-spacing: 0.15em; text-transform: uppercase; }
