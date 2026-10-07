@@ -535,10 +535,15 @@ if (invitationRoute && formRoute) {
         const template = document.querySelector("#rsvp-form-template");
         if (!template) throw new Error("No se encontró la plantilla del formulario.");
         formRoute.replaceChildren(template.content.cloneNode(true));
-        if (localFileMode) {
-          formRoute.querySelectorAll('a[href="#inicio"]').forEach((link) => link.setAttribute("href", "#inicio"));
-          formRoute.querySelectorAll('a[href="#confirmar"]').forEach((link) => link.setAttribute("href", "#confirmar"));
-        }
+        const invitationHashUrl = (hash) => localFileMode
+          ? new URL(hash, window.location.href).href
+          : `${homeUrl.pathname}${hash}`;
+        formRoute.querySelectorAll('a[href="#inicio"]').forEach((link) => {
+          link.href = invitationHashUrl("#inicio");
+        });
+        formRoute.querySelectorAll('a[href="#confirmar"]').forEach((link) => {
+          link.href = invitationHashUrl("#confirmar");
+        });
         formMarkupLoaded = true;
       }
       await loadFormAssets();
