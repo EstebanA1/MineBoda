@@ -182,17 +182,8 @@ h2 em { color: var(--taupe); font-weight: 500; }
 .button:hover { transform: translateY(-2px); }
 .button--dark { color: var(--paper); background: var(--ink); }
 .button--dark span { color: var(--beige); }
-.location__art { position: relative; min-height: 19rem; display: grid; place-items: center; overflow: hidden; border: 1px solid #3c393545; background: #e1d8cc; }
-.map-paper { position: absolute; inset: 1.2rem; overflow: hidden; border: 1px solid #3c393570; background-color: #f0e9df; background-image: linear-gradient(#8f7f6f2b 1px, transparent 1px), linear-gradient(90deg, #8f7f6f2b 1px, transparent 1px); background-size: 2.15rem 2.15rem; transform: rotate(-4deg); }
-.map-ring { position: absolute; width: 19rem; aspect-ratio: 1; border: 1px solid #9e8c7975; border-radius: 50%; }
-.map-ring--one { left: -8rem; top: -9rem; }
-.map-ring--two { right: -8rem; bottom: -10rem; width: 22rem; }
-.map-path { position: absolute; left: 15%; top: 38%; width: 88%; height: 4rem; border: 2px solid #a58b7499; border-color: #a58b7499 transparent transparent; border-radius: 50%; transform: rotate(-27deg); }
-.map-pin { position: absolute; left: 51%; top: 43%; color: var(--taupe); font-size: 2.3rem; transform: translate(-50%, -50%); }
-.map-label { position: absolute; color: #756b60; font: 0.48rem var(--mono); letter-spacing: 0.14em; }
-.map-label--top { top: 14%; right: 13%; }
-.map-label--bottom { left: 13%; bottom: 15%; }
-.location__sticker { position: absolute; right: 0.8rem; top: 0.6rem; padding: 0.65rem 0.8rem; background: var(--taupe); color: var(--white); border-radius: 50%; transform: rotate(10deg); font: italic 0.95rem var(--serif); }
+.location__map-frame { position: relative; height: clamp(19rem, 75vw, 26rem); overflow: hidden; border: 1px solid #3c393545; background: #e1d8cc; }
+.location__map { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; }
 
 .dress { display: grid; gap: 2.4rem; align-items: center; }
 .dress__image { min-height: 23rem; border-radius: 0.2rem 8rem 0.2rem 0.2rem; background: linear-gradient(150deg, #d8d0c6, #96897b 50%, #554c44); }
@@ -278,8 +269,7 @@ h2 em { color: var(--taupe); font-weight: 500; }
   .schedule__time { font-size: 0.85rem; }
   .schedule__item h3 { font-size: 1.7rem; }
   .location { grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.92fr); align-items: center; gap: 7vw; }
-  .location__art { min-height: 30rem; }
-  .map-paper { inset: 2rem; }
+  .location__map-frame { height: 30rem; }
   .dress { grid-template-columns: minmax(19rem, 0.9fr) minmax(0, 1fr); gap: 8vw; }
   .dress__image { min-height: min(62vw, 39rem); border-radius: 0.2rem 12rem 0.2rem 0.2rem; }
   .gallery__heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; column-gap: 2rem; padding: 0 9vw; }

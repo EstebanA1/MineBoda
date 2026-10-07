@@ -11,7 +11,7 @@ Copia las imágenes originales en la carpeta `fotos/por-revisar/`. Las versiones
 - Pareja: Esteban y Nicole.
 - Fecha de muestra: sábado 13 de febrero de 2027.
 - Itinerario tentativo: ceremonia 18:00; cóctel y fotografías 19:00; cena 20:30; brindis y actividades 22:00; baile 23:30.
-- Lugar propuesto: Espacio Los Aromos, Lagunillas, Coronel.
+- Lugar: Centro de eventos Mare Mare, Los Pehuenches, Coronel.
 - Confirmación sugerida hasta el 13 de diciembre de 2026.
 - Vestimenta formal; se pide a las invitadas evitar el blanco.
 
