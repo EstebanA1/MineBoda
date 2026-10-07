@@ -28,7 +28,6 @@ const invitation = {
   timezone: "America/Santiago",
   names: "Esteban y Nicole",
   venue: "Centro de eventos Mare Mare",
-  mapUrl: "https://www.google.com/maps/place/Centro+de+eventos+Mare+Mare/@-36.9957881,-73.1798927,17z/data=!3m1!4b1!4m6!3m5!1s0x9669c7da84ffbffd:0x939a9d49562adcca!8m2!3d-36.9957881!4d-73.1798927!16s%2Fg%2F11sdzt0jk8",
   photos: {
     story: [
       { src: photoPath(4), alt: "Esteban y Nicole compartiendo un momento especial" },
@@ -363,9 +362,6 @@ window.setInterval(updateCountdown, 1000);
 const eventTime = new Date(invitation.eventDate);
 const eventDateParts = dateParts(eventTime);
 const weekdayLabel = eventDateParts.weekday.charAt(0).toLocaleUpperCase("es-CL") + eventDateParts.weekday.slice(1);
-const mapLink = document.querySelector("[data-map-link]");
-if (mapLink) mapLink.href = invitation.mapUrl;
-
 setDateText("[data-event-weekday]", weekdayLabel);
 setDateText("[data-event-day]", eventDateParts.day);
 setDateText("[data-event-month]", eventDateParts.month);
